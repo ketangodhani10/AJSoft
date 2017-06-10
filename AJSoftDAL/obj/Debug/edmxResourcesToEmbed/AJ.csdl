@@ -1,0 +1,743 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBAJModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <ComplexType Name="f_split_Result">
+    <Property Name="val" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="seq" Type="Int32" />
+  </ComplexType>
+  <EntityContainer Name="DBAJEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="f_split" IsComposable="true" ReturnType="Collection(DBAJModel.f_split_Result)">
+      <Parameter Name="param" Mode="In" Type="String" />
+      <Parameter Name="delimiter" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="FinanceSales" EntityType="DBAJModel.FinanceSale" />
+    <EntitySet Name="JariCompanies" EntityType="DBAJModel.JariCompany" />
+    <EntitySet Name="Lookups" EntityType="DBAJModel.Lookup" />
+    <EntitySet Name="Roles" EntityType="DBAJModel.Role" />
+    <EntitySet Name="ShadeCards" EntityType="DBAJModel.ShadeCard" />
+    <EntitySet Name="SiteConfigs" EntityType="DBAJModel.SiteConfig" />
+    <EntitySet Name="States" EntityType="DBAJModel.State" />
+    <EntitySet Name="TranDetails" EntityType="DBAJModel.TranDetail" />
+    <EntitySet Name="TranHeaders" EntityType="DBAJModel.TranHeader" />
+    <EntitySet Name="TranJournals" EntityType="DBAJModel.TranJournal" />
+    <EntitySet Name="Users" EntityType="DBAJModel.User" />
+    <EntitySet Name="YarnTypes" EntityType="DBAJModel.YarnType" />
+    <EntitySet Name="vw_ShadeCards" EntityType="DBAJModel.vw_ShadeCards" />
+    <AssociationSet Name="FK_FinanceSales_JariCompanies" Association="DBAJModel.FK_FinanceSales_JariCompanies">
+      <End Role="JariCompany" EntitySet="JariCompanies" />
+      <End Role="FinanceSale" EntitySet="FinanceSales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShadeCards_JariCompanies" Association="DBAJModel.FK_ShadeCards_JariCompanies">
+      <End Role="JariCompany" EntitySet="JariCompanies" />
+      <End Role="ShadeCard" EntitySet="ShadeCards" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TranDetails_JariCompanies" Association="DBAJModel.FK_TranDetails_JariCompanies">
+      <End Role="JariCompany" EntitySet="JariCompanies" />
+      <End Role="TranDetail" EntitySet="TranDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TranHeaders_JariCompanies" Association="DBAJModel.FK_TranHeaders_JariCompanies">
+      <End Role="JariCompany" EntitySet="JariCompanies" />
+      <End Role="TranHeader" EntitySet="TranHeaders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TranJournals_JariCompanies" Association="DBAJModel.FK_TranJournals_JariCompanies">
+      <End Role="JariCompany" EntitySet="JariCompanies" />
+      <End Role="TranJournal" EntitySet="TranJournals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_JariCompanies" Association="DBAJModel.FK_Users_JariCompanies">
+      <End Role="JariCompany" EntitySet="JariCompanies" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Roles" Association="DBAJModel.FK_Users_Roles">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShadeCard_YarnTypes" Association="DBAJModel.FK_ShadeCard_YarnTypes">
+      <End Role="YarnType" EntitySet="YarnTypes" />
+      <End Role="ShadeCard" EntitySet="ShadeCards" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShadeCards_ShadeCards" Association="DBAJModel.FK_ShadeCards_ShadeCards">
+      <End Role="ShadeCard" EntitySet="ShadeCards" />
+      <End Role="ShadeCard1" EntitySet="ShadeCards" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TranDetails_ShadeCard" Association="DBAJModel.FK_TranDetails_ShadeCard">
+      <End Role="ShadeCard" EntitySet="ShadeCards" />
+      <End Role="TranDetail" EntitySet="TranDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TranDetails_TranHeaders" Association="DBAJModel.FK_TranDetails_TranHeaders">
+      <End Role="TranHeader" EntitySet="TranHeaders" />
+      <End Role="TranDetail" EntitySet="TranDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TranDetails_TranHeaders1" Association="DBAJModel.FK_TranDetails_TranHeaders1">
+      <End Role="TranHeader" EntitySet="TranHeaders" />
+      <End Role="TranDetail" EntitySet="TranDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TranJournals_TranHeaders" Association="DBAJModel.FK_TranJournals_TranHeaders">
+      <End Role="TranHeader" EntitySet="TranHeaders" />
+      <End Role="TranJournal" EntitySet="TranJournals" />
+    </AssociationSet>
+    <EntitySet Name="vw_Users" EntityType="DBAJModel.vw_Users" />
+    <EntitySet Name="EmbroideryFirmPriceSettings" EntityType="DBAJModel.EmbroideryFirmPriceSetting" />
+    <AssociationSet Name="FK_EmbroideryCompanyPriceSettings_JariCompanies" Association="DBAJModel.FK_EmbroideryCompanyPriceSettings_JariCompanies">
+      <End Role="JariCompany" EntitySet="JariCompanies" />
+      <End Role="EmbroideryFirmPriceSetting" EntitySet="EmbroideryFirmPriceSettings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmbroideryCompanyPriceSettings_ShadeCards" Association="DBAJModel.FK_EmbroideryCompanyPriceSettings_ShadeCards">
+      <End Role="ShadeCard" EntitySet="ShadeCards" />
+      <End Role="EmbroideryFirmPriceSetting" EntitySet="EmbroideryFirmPriceSettings" />
+    </AssociationSet>
+    <EntitySet Name="EmbroideryFirms" EntityType="DBAJModel.EmbroideryFirm" />
+    <AssociationSet Name="FK_EmbroideryFirmPriceSettings_EmbroideryFirms" Association="DBAJModel.FK_EmbroideryFirmPriceSettings_EmbroideryFirms">
+      <End Role="EmbroideryFirm" EntitySet="EmbroideryFirms" />
+      <End Role="EmbroideryFirmPriceSetting" EntitySet="EmbroideryFirmPriceSettings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Companies_JariCompanies" Association="DBAJModel.FK_Companies_JariCompanies">
+      <End Role="JariCompany" EntitySet="JariCompanies" />
+      <End Role="EmbroideryFirm" EntitySet="EmbroideryFirms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TranDetails_EmbroideryCompanies" Association="DBAJModel.FK_TranDetails_EmbroideryCompanies">
+      <End Role="EmbroideryFirm" EntitySet="EmbroideryFirms" />
+      <End Role="TranDetail" EntitySet="TranDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TranHeaders_Companies" Association="DBAJModel.FK_TranHeaders_Companies">
+      <End Role="EmbroideryFirm" EntitySet="EmbroideryFirms" />
+      <End Role="TranHeader" EntitySet="TranHeaders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TranJournals_Companies" Association="DBAJModel.FK_TranJournals_Companies">
+      <End Role="EmbroideryFirm" EntitySet="EmbroideryFirms" />
+      <End Role="TranJournal" EntitySet="TranJournals" />
+    </AssociationSet>
+    <EntitySet Name="EmbroideryFirmLocations" EntityType="DBAJModel.EmbroideryFirmLocation" />
+    <EntitySet Name="vw_EmbroideryFirms" EntityType="DBAJModel.vw_EmbroideryFirms" />
+    <AssociationSet Name="FK_EmbroideryFirmLocations_EmbroideryFirms" Association="DBAJModel.FK_EmbroideryFirmLocations_EmbroideryFirms">
+      <End Role="EmbroideryFirm" EntitySet="EmbroideryFirms" />
+      <End Role="EmbroideryFirmLocation" EntitySet="EmbroideryFirmLocations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmbroideryFirmLocations_JariCompanies" Association="DBAJModel.FK_EmbroideryFirmLocations_JariCompanies">
+      <End Role="JariCompany" EntitySet="JariCompanies" />
+      <End Role="EmbroideryFirmLocation" EntitySet="EmbroideryFirmLocations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TranHeaders_EmbroideryCompanyLocations" Association="DBAJModel.FK_TranHeaders_EmbroideryCompanyLocations">
+      <End Role="EmbroideryFirmLocation" EntitySet="EmbroideryFirmLocations" />
+      <End Role="TranHeader" EntitySet="TranHeaders" />
+    </AssociationSet>
+    <EntitySet Name="vw_EmbroideryFirmPriceSettings" EntityType="DBAJModel.vw_EmbroideryFirmPriceSettings" />
+  </EntityContainer>
+  <EntityType Name="FinanceSale">
+    <Key>
+      <PropertyRef Name="FinanceSaleId" />
+    </Key>
+    <Property Name="FinanceSaleId" Type="Guid" Nullable="false" />
+    <Property Name="JariCompanyId" Type="Int32" Nullable="false" />
+    <Property Name="Week" Type="Int32" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="FromDate" Type="DateTime" Precision="3" />
+    <Property Name="ToDate" Type="DateTime" Precision="3" />
+    <Property Name="TotalInvCases" Type="Int32" />
+    <Property Name="InvoicedAmt" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="JariCompany" Relationship="DBAJModel.FK_FinanceSales_JariCompanies" FromRole="FinanceSale" ToRole="JariCompany" />
+  </EntityType>
+  <EntityType Name="JariCompany">
+    <Key>
+      <PropertyRef Name="JariCompanyId" />
+    </Key>
+    <Property Name="JariCompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JariCompanyName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ActivationEndDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="FinanceSales" Relationship="DBAJModel.FK_FinanceSales_JariCompanies" FromRole="JariCompany" ToRole="FinanceSale" />
+    <NavigationProperty Name="ShadeCards" Relationship="DBAJModel.FK_ShadeCards_JariCompanies" FromRole="JariCompany" ToRole="ShadeCard" />
+    <NavigationProperty Name="TranDetails" Relationship="DBAJModel.FK_TranDetails_JariCompanies" FromRole="JariCompany" ToRole="TranDetail" />
+    <NavigationProperty Name="TranHeaders" Relationship="DBAJModel.FK_TranHeaders_JariCompanies" FromRole="JariCompany" ToRole="TranHeader" />
+    <NavigationProperty Name="TranJournals" Relationship="DBAJModel.FK_TranJournals_JariCompanies" FromRole="JariCompany" ToRole="TranJournal" />
+    <NavigationProperty Name="Users" Relationship="DBAJModel.FK_Users_JariCompanies" FromRole="JariCompany" ToRole="User" />
+    <NavigationProperty Name="EmbroideryFirmPriceSettings" Relationship="DBAJModel.FK_EmbroideryCompanyPriceSettings_JariCompanies" FromRole="JariCompany" ToRole="EmbroideryFirmPriceSetting" />
+    <NavigationProperty Name="EmbroideryFirms" Relationship="DBAJModel.FK_Companies_JariCompanies" FromRole="JariCompany" ToRole="EmbroideryFirm" />
+    <NavigationProperty Name="EmbroideryFirmLocations" Relationship="DBAJModel.FK_EmbroideryFirmLocations_JariCompanies" FromRole="JariCompany" ToRole="EmbroideryFirmLocation" />
+  </EntityType>
+  <EntityType Name="Lookup">
+    <Key>
+      <PropertyRef Name="LookupId" />
+    </Key>
+    <Property Name="LookupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LookupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LookupGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="DBAJModel.FK_Users_Roles" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="ShadeCard">
+    <Key>
+      <PropertyRef Name="ShadeId" />
+    </Key>
+    <Property Name="ShadeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JariCompanyId" Type="Int32" Nullable="false" />
+    <Property Name="YarnTypeId" Type="Int32" Nullable="false" />
+    <Property Name="ShadeName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ShadeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="DateTime" Precision="3" />
+    <Property Name="DisplayOrder" Type="Int32" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="JariCompany" Relationship="DBAJModel.FK_ShadeCards_JariCompanies" FromRole="ShadeCard" ToRole="JariCompany" />
+    <NavigationProperty Name="YarnType" Relationship="DBAJModel.FK_ShadeCard_YarnTypes" FromRole="ShadeCard" ToRole="YarnType" />
+    <NavigationProperty Name="ShadeCards1" Relationship="DBAJModel.FK_ShadeCards_ShadeCards" FromRole="ShadeCard" ToRole="ShadeCard1" />
+    <NavigationProperty Name="ShadeCard1" Relationship="DBAJModel.FK_ShadeCards_ShadeCards" FromRole="ShadeCard1" ToRole="ShadeCard" />
+    <NavigationProperty Name="TranDetails" Relationship="DBAJModel.FK_TranDetails_ShadeCard" FromRole="ShadeCard" ToRole="TranDetail" />
+    <NavigationProperty Name="EmbroideryFirmPriceSettings" Relationship="DBAJModel.FK_EmbroideryCompanyPriceSettings_ShadeCards" FromRole="ShadeCard" ToRole="EmbroideryFirmPriceSetting" />
+  </EntityType>
+  <EntityType Name="SiteConfig">
+    <Key>
+      <PropertyRef Name="SiteConfigId" />
+    </Key>
+    <Property Name="SiteConfigId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StateName2Char" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TranDetail">
+    <Key>
+      <PropertyRef Name="TranDetailId" />
+    </Key>
+    <Property Name="TranDetailId" Type="Guid" Nullable="false" />
+    <Property Name="TranHeaderId" Type="Guid" Nullable="false" />
+    <Property Name="JariCompanyId" Type="Int32" Nullable="false" />
+    <Property Name="CompanyId" Type="Guid" Nullable="false" />
+    <Property Name="ShadeId" Type="Int32" />
+    <Property Name="InvoiceTranHeaderId" Type="Guid" />
+    <Property Name="TranDetailAmt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TranDetailNotes" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="IsDiscount" Type="Boolean" Nullable="false" />
+    <Property Name="IsPercentage" Type="Boolean" Nullable="false" />
+    <Property Name="IsAdjustmentAmt" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="JariCompany" Relationship="DBAJModel.FK_TranDetails_JariCompanies" FromRole="TranDetail" ToRole="JariCompany" />
+    <NavigationProperty Name="ShadeCard" Relationship="DBAJModel.FK_TranDetails_ShadeCard" FromRole="TranDetail" ToRole="ShadeCard" />
+    <NavigationProperty Name="TranHeader" Relationship="DBAJModel.FK_TranDetails_TranHeaders" FromRole="TranDetail" ToRole="TranHeader" />
+    <NavigationProperty Name="TranHeader1" Relationship="DBAJModel.FK_TranDetails_TranHeaders1" FromRole="TranDetail" ToRole="TranHeader" />
+    <NavigationProperty Name="EmbroideryFirm" Relationship="DBAJModel.FK_TranDetails_EmbroideryCompanies" FromRole="TranDetail" ToRole="EmbroideryFirm" />
+  </EntityType>
+  <EntityType Name="TranHeader">
+    <Key>
+      <PropertyRef Name="TranHeaderId" />
+    </Key>
+    <Property Name="TranHeaderId" Type="Guid" Nullable="false" />
+    <Property Name="JariCompanyId" Type="Int32" Nullable="false" />
+    <Property Name="CompanyId" Type="Guid" Nullable="false" />
+    <Property Name="CompanyLocationId" Type="Guid" Nullable="false" />
+    <Property Name="TranType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TranSubType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TranStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PaidBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CheckDate" Type="DateTime" Precision="3" />
+    <Property Name="CheckNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TransDate" Type="DateTime" Precision="3" />
+    <Property Name="FromDate" Type="DateTime" Precision="3" />
+    <Property Name="ToDate" Type="DateTime" Precision="3" />
+    <Property Name="BillingTerms" Type="Int32" />
+    <Property Name="DueDate" Type="DateTime" Precision="3" />
+    <Property Name="Notes" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="JariCompany" Relationship="DBAJModel.FK_TranHeaders_JariCompanies" FromRole="TranHeader" ToRole="JariCompany" />
+    <NavigationProperty Name="TranDetails" Relationship="DBAJModel.FK_TranDetails_TranHeaders" FromRole="TranHeader" ToRole="TranDetail" />
+    <NavigationProperty Name="TranDetails1" Relationship="DBAJModel.FK_TranDetails_TranHeaders1" FromRole="TranHeader" ToRole="TranDetail" />
+    <NavigationProperty Name="TranJournals" Relationship="DBAJModel.FK_TranJournals_TranHeaders" FromRole="TranHeader" ToRole="TranJournal" />
+    <NavigationProperty Name="EmbroideryFirm" Relationship="DBAJModel.FK_TranHeaders_Companies" FromRole="TranHeader" ToRole="EmbroideryFirm" />
+    <NavigationProperty Name="EmbroideryFirmLocation" Relationship="DBAJModel.FK_TranHeaders_EmbroideryCompanyLocations" FromRole="TranHeader" ToRole="EmbroideryFirmLocation" />
+  </EntityType>
+  <EntityType Name="TranJournal">
+    <Key>
+      <PropertyRef Name="TranJournalId" />
+    </Key>
+    <Property Name="TranJournalId" Type="Guid" Nullable="false" />
+    <Property Name="TranHeaderId" Type="Guid" Nullable="false" />
+    <Property Name="JariCompanyId" Type="Int32" Nullable="false" />
+    <Property Name="CompanyId" Type="Guid" Nullable="false" />
+    <Property Name="CompanyLocationId" Type="Guid" Nullable="false" />
+    <Property Name="Reference" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TranJournalNotes" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="CR" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="DR" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="JariCompany" Relationship="DBAJModel.FK_TranJournals_JariCompanies" FromRole="TranJournal" ToRole="JariCompany" />
+    <NavigationProperty Name="TranHeader" Relationship="DBAJModel.FK_TranJournals_TranHeaders" FromRole="TranJournal" ToRole="TranHeader" />
+    <NavigationProperty Name="EmbroideryFirm" Relationship="DBAJModel.FK_TranJournals_Companies" FromRole="TranJournal" ToRole="EmbroideryFirm" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <Property Name="JariCompanyId" Type="Int32" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="JariCompany" Relationship="DBAJModel.FK_Users_JariCompanies" FromRole="User" ToRole="JariCompany" />
+    <NavigationProperty Name="Role" Relationship="DBAJModel.FK_Users_Roles" FromRole="User" ToRole="Role" />
+  </EntityType>
+  <EntityType Name="YarnType">
+    <Key>
+      <PropertyRef Name="YarnTypeId" />
+    </Key>
+    <Property Name="YarnTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="YarnTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="YarnColorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ShadeCards" Relationship="DBAJModel.FK_ShadeCard_YarnTypes" FromRole="YarnType" ToRole="ShadeCard" />
+  </EntityType>
+  <EntityType Name="vw_ShadeCards">
+    <Key>
+      <PropertyRef Name="ShadeId" />
+      <PropertyRef Name="JariCompanyId" />
+      <PropertyRef Name="YarnTypeId" />
+      <PropertyRef Name="JariCompanyName" />
+    </Key>
+    <Property Name="ShadeId" Type="Int32" Nullable="false" />
+    <Property Name="JariCompanyId" Type="Int32" Nullable="false" />
+    <Property Name="YarnTypeId" Type="Int32" Nullable="false" />
+    <Property Name="ShadeName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ShadeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="DateTime" Precision="3" />
+    <Property Name="DisplayOrder" Type="Int32" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <Property Name="YarnTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="YarnColorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="JariCompanyName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_FinanceSales_JariCompanies">
+    <End Type="DBAJModel.JariCompany" Role="JariCompany" Multiplicity="1" />
+    <End Type="DBAJModel.FinanceSale" Role="FinanceSale" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JariCompany">
+        <PropertyRef Name="JariCompanyId" />
+      </Principal>
+      <Dependent Role="FinanceSale">
+        <PropertyRef Name="JariCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShadeCards_JariCompanies">
+    <End Type="DBAJModel.JariCompany" Role="JariCompany" Multiplicity="1" />
+    <End Type="DBAJModel.ShadeCard" Role="ShadeCard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JariCompany">
+        <PropertyRef Name="JariCompanyId" />
+      </Principal>
+      <Dependent Role="ShadeCard">
+        <PropertyRef Name="JariCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TranDetails_JariCompanies">
+    <End Type="DBAJModel.JariCompany" Role="JariCompany" Multiplicity="1" />
+    <End Type="DBAJModel.TranDetail" Role="TranDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JariCompany">
+        <PropertyRef Name="JariCompanyId" />
+      </Principal>
+      <Dependent Role="TranDetail">
+        <PropertyRef Name="JariCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TranHeaders_JariCompanies">
+    <End Type="DBAJModel.JariCompany" Role="JariCompany" Multiplicity="1" />
+    <End Type="DBAJModel.TranHeader" Role="TranHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JariCompany">
+        <PropertyRef Name="JariCompanyId" />
+      </Principal>
+      <Dependent Role="TranHeader">
+        <PropertyRef Name="JariCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TranJournals_JariCompanies">
+    <End Type="DBAJModel.JariCompany" Role="JariCompany" Multiplicity="1" />
+    <End Type="DBAJModel.TranJournal" Role="TranJournal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JariCompany">
+        <PropertyRef Name="JariCompanyId" />
+      </Principal>
+      <Dependent Role="TranJournal">
+        <PropertyRef Name="JariCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_JariCompanies">
+    <End Type="DBAJModel.JariCompany" Role="JariCompany" Multiplicity="0..1" />
+    <End Type="DBAJModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JariCompany">
+        <PropertyRef Name="JariCompanyId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="JariCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Roles">
+    <End Type="DBAJModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="DBAJModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShadeCard_YarnTypes">
+    <End Type="DBAJModel.YarnType" Role="YarnType" Multiplicity="1" />
+    <End Type="DBAJModel.ShadeCard" Role="ShadeCard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="YarnType">
+        <PropertyRef Name="YarnTypeId" />
+      </Principal>
+      <Dependent Role="ShadeCard">
+        <PropertyRef Name="YarnTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShadeCards_ShadeCards">
+    <End Type="DBAJModel.ShadeCard" Role="ShadeCard" Multiplicity="1" />
+    <End Type="DBAJModel.ShadeCard" Role="ShadeCard1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="ShadeCard">
+        <PropertyRef Name="ShadeId" />
+      </Principal>
+      <Dependent Role="ShadeCard1">
+        <PropertyRef Name="ShadeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TranDetails_ShadeCard">
+    <End Type="DBAJModel.ShadeCard" Role="ShadeCard" Multiplicity="0..1" />
+    <End Type="DBAJModel.TranDetail" Role="TranDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShadeCard">
+        <PropertyRef Name="ShadeId" />
+      </Principal>
+      <Dependent Role="TranDetail">
+        <PropertyRef Name="ShadeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TranDetails_TranHeaders">
+    <End Type="DBAJModel.TranHeader" Role="TranHeader" Multiplicity="1" />
+    <End Type="DBAJModel.TranDetail" Role="TranDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TranHeader">
+        <PropertyRef Name="TranHeaderId" />
+      </Principal>
+      <Dependent Role="TranDetail">
+        <PropertyRef Name="TranHeaderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TranDetails_TranHeaders1">
+    <End Type="DBAJModel.TranHeader" Role="TranHeader" Multiplicity="0..1" />
+    <End Type="DBAJModel.TranDetail" Role="TranDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TranHeader">
+        <PropertyRef Name="TranHeaderId" />
+      </Principal>
+      <Dependent Role="TranDetail">
+        <PropertyRef Name="InvoiceTranHeaderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TranJournals_TranHeaders">
+    <End Type="DBAJModel.TranHeader" Role="TranHeader" Multiplicity="1" />
+    <End Type="DBAJModel.TranJournal" Role="TranJournal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TranHeader">
+        <PropertyRef Name="TranHeaderId" />
+      </Principal>
+      <Dependent Role="TranJournal">
+        <PropertyRef Name="TranHeaderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="vw_Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <Property Name="JariCompanyId" Type="Int32" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <Property Name="JariCompanyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="ActivationEndDate" Type="DateTime" Precision="3" />
+    <Property Name="RoleGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="EmbroideryFirmPriceSetting">
+    <Key>
+      <PropertyRef Name="EmbroideryFirmPriceSettingsId" />
+    </Key>
+    <Property Name="EmbroideryFirmPriceSettingsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmbroideryFirmId" Type="Guid" Nullable="false" />
+    <Property Name="JariCompanyId" Type="Int32" Nullable="false" />
+    <Property Name="ShadeId" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="StartDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="JariCompany" Relationship="DBAJModel.FK_EmbroideryCompanyPriceSettings_JariCompanies" FromRole="EmbroideryFirmPriceSetting" ToRole="JariCompany" />
+    <NavigationProperty Name="ShadeCard" Relationship="DBAJModel.FK_EmbroideryCompanyPriceSettings_ShadeCards" FromRole="EmbroideryFirmPriceSetting" ToRole="ShadeCard" />
+    <NavigationProperty Name="EmbroideryFirm" Relationship="DBAJModel.FK_EmbroideryFirmPriceSettings_EmbroideryFirms" FromRole="EmbroideryFirmPriceSetting" ToRole="EmbroideryFirm" />
+  </EntityType>
+  <Association Name="FK_EmbroideryCompanyPriceSettings_JariCompanies">
+    <End Type="DBAJModel.JariCompany" Role="JariCompany" Multiplicity="1" />
+    <End Type="DBAJModel.EmbroideryFirmPriceSetting" Role="EmbroideryFirmPriceSetting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JariCompany">
+        <PropertyRef Name="JariCompanyId" />
+      </Principal>
+      <Dependent Role="EmbroideryFirmPriceSetting">
+        <PropertyRef Name="JariCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmbroideryCompanyPriceSettings_ShadeCards">
+    <End Type="DBAJModel.ShadeCard" Role="ShadeCard" Multiplicity="1" />
+    <End Type="DBAJModel.EmbroideryFirmPriceSetting" Role="EmbroideryFirmPriceSetting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShadeCard">
+        <PropertyRef Name="ShadeId" />
+      </Principal>
+      <Dependent Role="EmbroideryFirmPriceSetting">
+        <PropertyRef Name="ShadeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="EmbroideryFirm">
+    <Key>
+      <PropertyRef Name="EmbroideryFirmId" />
+    </Key>
+    <Property Name="EmbroideryFirmId" Type="Guid" Nullable="false" />
+    <Property Name="JariCompanyId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="EmbroideryFirmName" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="EmbroideryFirmPriceSettings" Relationship="DBAJModel.FK_EmbroideryFirmPriceSettings_EmbroideryFirms" FromRole="EmbroideryFirm" ToRole="EmbroideryFirmPriceSetting" />
+    <NavigationProperty Name="JariCompany" Relationship="DBAJModel.FK_Companies_JariCompanies" FromRole="EmbroideryFirm" ToRole="JariCompany" />
+    <NavigationProperty Name="TranDetails" Relationship="DBAJModel.FK_TranDetails_EmbroideryCompanies" FromRole="EmbroideryFirm" ToRole="TranDetail" />
+    <NavigationProperty Name="TranHeaders" Relationship="DBAJModel.FK_TranHeaders_Companies" FromRole="EmbroideryFirm" ToRole="TranHeader" />
+    <NavigationProperty Name="TranJournals" Relationship="DBAJModel.FK_TranJournals_Companies" FromRole="EmbroideryFirm" ToRole="TranJournal" />
+    <NavigationProperty Name="EmbroideryFirmLocations" Relationship="DBAJModel.FK_EmbroideryFirmLocations_EmbroideryFirms" FromRole="EmbroideryFirm" ToRole="EmbroideryFirmLocation" />
+  </EntityType>
+  <Association Name="FK_EmbroideryFirmPriceSettings_EmbroideryFirms">
+    <End Type="DBAJModel.EmbroideryFirm" Role="EmbroideryFirm" Multiplicity="1" />
+    <End Type="DBAJModel.EmbroideryFirmPriceSetting" Role="EmbroideryFirmPriceSetting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmbroideryFirm">
+        <PropertyRef Name="EmbroideryFirmId" />
+      </Principal>
+      <Dependent Role="EmbroideryFirmPriceSetting">
+        <PropertyRef Name="EmbroideryFirmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Companies_JariCompanies">
+    <End Type="DBAJModel.JariCompany" Role="JariCompany" Multiplicity="1" />
+    <End Type="DBAJModel.EmbroideryFirm" Role="EmbroideryFirm" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JariCompany">
+        <PropertyRef Name="JariCompanyId" />
+      </Principal>
+      <Dependent Role="EmbroideryFirm">
+        <PropertyRef Name="JariCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TranDetails_EmbroideryCompanies">
+    <End Type="DBAJModel.EmbroideryFirm" Role="EmbroideryFirm" Multiplicity="1" />
+    <End Type="DBAJModel.TranDetail" Role="TranDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmbroideryFirm">
+        <PropertyRef Name="EmbroideryFirmId" />
+      </Principal>
+      <Dependent Role="TranDetail">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TranHeaders_Companies">
+    <End Type="DBAJModel.EmbroideryFirm" Role="EmbroideryFirm" Multiplicity="1" />
+    <End Type="DBAJModel.TranHeader" Role="TranHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmbroideryFirm">
+        <PropertyRef Name="EmbroideryFirmId" />
+      </Principal>
+      <Dependent Role="TranHeader">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TranJournals_Companies">
+    <End Type="DBAJModel.EmbroideryFirm" Role="EmbroideryFirm" Multiplicity="1" />
+    <End Type="DBAJModel.TranJournal" Role="TranJournal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmbroideryFirm">
+        <PropertyRef Name="EmbroideryFirmId" />
+      </Principal>
+      <Dependent Role="TranJournal">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="EmbroideryFirmLocation">
+    <Key>
+      <PropertyRef Name="EmbroideryFirmLocationId" />
+    </Key>
+    <Property Name="EmbroideryFirmLocationId" Type="Guid" Nullable="false" />
+    <Property Name="EmbroideryFirmId" Type="Guid" Nullable="false" />
+    <Property Name="JariCompanyId" Type="Int32" Nullable="false" />
+    <Property Name="ContactPerson" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Address2" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsPrimaryLocation" Type="Boolean" Nullable="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="BillingTerms" Type="Int32" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="EmbroideryFirm" Relationship="DBAJModel.FK_EmbroideryFirmLocations_EmbroideryFirms" FromRole="EmbroideryFirmLocation" ToRole="EmbroideryFirm" />
+    <NavigationProperty Name="JariCompany" Relationship="DBAJModel.FK_EmbroideryFirmLocations_JariCompanies" FromRole="EmbroideryFirmLocation" ToRole="JariCompany" />
+    <NavigationProperty Name="TranHeaders" Relationship="DBAJModel.FK_TranHeaders_EmbroideryCompanyLocations" FromRole="EmbroideryFirmLocation" ToRole="TranHeader" />
+  </EntityType>
+  <EntityType Name="vw_EmbroideryFirms">
+    <Key>
+      <PropertyRef Name="EmbroideryFirmId" />
+      <PropertyRef Name="JariCompanyId" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="EmbroideryFirmName" />
+      <PropertyRef Name="JariCompanyName" />
+      <PropertyRef Name="EmbroideryFirmLocationId" />
+      <PropertyRef Name="ContactPerson" />
+    </Key>
+    <Property Name="EmbroideryFirmId" Type="Guid" Nullable="false" />
+    <Property Name="JariCompanyId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="EmbroideryFirmName" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <Property Name="JariCompanyName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TotalLocations" Type="Int32" />
+    <Property Name="EmbroideryFirmLocationId" Type="Guid" Nullable="false" />
+    <Property Name="ContactPerson" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Address2" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BillingTerms" Type="Int32" />
+    <Property Name="FullAddress" Type="String" MaxLength="553" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_EmbroideryFirmLocations_EmbroideryFirms">
+    <End Type="DBAJModel.EmbroideryFirm" Role="EmbroideryFirm" Multiplicity="1" />
+    <End Type="DBAJModel.EmbroideryFirmLocation" Role="EmbroideryFirmLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmbroideryFirm">
+        <PropertyRef Name="EmbroideryFirmId" />
+      </Principal>
+      <Dependent Role="EmbroideryFirmLocation">
+        <PropertyRef Name="EmbroideryFirmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmbroideryFirmLocations_JariCompanies">
+    <End Type="DBAJModel.JariCompany" Role="JariCompany" Multiplicity="1" />
+    <End Type="DBAJModel.EmbroideryFirmLocation" Role="EmbroideryFirmLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JariCompany">
+        <PropertyRef Name="JariCompanyId" />
+      </Principal>
+      <Dependent Role="EmbroideryFirmLocation">
+        <PropertyRef Name="JariCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TranHeaders_EmbroideryCompanyLocations">
+    <End Type="DBAJModel.EmbroideryFirmLocation" Role="EmbroideryFirmLocation" Multiplicity="1" />
+    <End Type="DBAJModel.TranHeader" Role="TranHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmbroideryFirmLocation">
+        <PropertyRef Name="EmbroideryFirmLocationId" />
+      </Principal>
+      <Dependent Role="TranHeader">
+        <PropertyRef Name="CompanyLocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="vw_EmbroideryFirmPriceSettings">
+    <Key>
+      <PropertyRef Name="EmbroideryFirmId" />
+      <PropertyRef Name="ShadeId" />
+      <PropertyRef Name="JariCompanyId" />
+      <PropertyRef Name="YarnTypeId" />
+    </Key>
+    <Property Name="EmbroideryFirmId" Type="Guid" Nullable="false" />
+    <Property Name="ShadeId" Type="Int32" Nullable="false" />
+    <Property Name="JariCompanyId" Type="Int32" Nullable="false" />
+    <Property Name="YarnTypeId" Type="Int32" Nullable="false" />
+    <Property Name="YarnTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="YarnColorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ShadeName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ShadeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" />
+    <Property Name="EmbroideryFirmPriceSettingsId" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="StartDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDefaultPrice" Type="Boolean" />
+    <Property Name="RowNumber" Type="Int64" />
+  </EntityType>
+</Schema>

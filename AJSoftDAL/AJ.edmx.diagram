@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b2e7c9c141304bfba81e0c97b6fe5d11" Name="Diagram1" ZoomLevel="18">
+        <EntityTypeShape EntityType="DBAJModel.FinanceSale" Width="1.5" PointX="3" PointY="35.125" />
+        <EntityTypeShape EntityType="DBAJModel.JariCompany" Width="1.5" PointX="0.75" PointY="17.5" />
+        <EntityTypeShape EntityType="DBAJModel.Lookup" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DBAJModel.Role" Width="1.5" PointX="0.75" PointY="23.375" />
+        <EntityTypeShape EntityType="DBAJModel.ShadeCard" Width="1.5" PointX="6" PointY="17.125" />
+        <EntityTypeShape EntityType="DBAJModel.SiteConfig" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DBAJModel.State" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="DBAJModel.TranDetail" Width="1.5" PointX="8.25" PointY="23.75" />
+        <EntityTypeShape EntityType="DBAJModel.TranHeader" Width="1.5" PointX="5.25" PointY="22.5" />
+        <EntityTypeShape EntityType="DBAJModel.TranJournal" Width="1.5" PointX="10.5" PointY="24.25" />
+        <EntityTypeShape EntityType="DBAJModel.User" Width="1.5" PointX="3" PointY="22.375" />
+        <EntityTypeShape EntityType="DBAJModel.YarnType" Width="1.5" PointX="3.75" PointY="10.375" />
+        <EntityTypeShape EntityType="DBAJModel.vw_ShadeCards" Width="1.5" PointX="2.75" PointY="3.75" />
+        <AssociationConnector Association="DBAJModel.FK_FinanceSales_JariCompanies" />
+        <AssociationConnector Association="DBAJModel.FK_ShadeCards_JariCompanies" />
+        <AssociationConnector Association="DBAJModel.FK_TranDetails_JariCompanies" />
+        <AssociationConnector Association="DBAJModel.FK_TranHeaders_JariCompanies" />
+        <AssociationConnector Association="DBAJModel.FK_TranJournals_JariCompanies" />
+        <AssociationConnector Association="DBAJModel.FK_Users_JariCompanies" />
+        <AssociationConnector Association="DBAJModel.FK_Users_Roles" />
+        <AssociationConnector Association="DBAJModel.FK_ShadeCard_YarnTypes" />
+        <AssociationConnector Association="DBAJModel.FK_ShadeCards_ShadeCards" />
+        <AssociationConnector Association="DBAJModel.FK_TranDetails_ShadeCard" />
+        <AssociationConnector Association="DBAJModel.FK_TranDetails_TranHeaders" />
+        <AssociationConnector Association="DBAJModel.FK_TranDetails_TranHeaders1" />
+        <AssociationConnector Association="DBAJModel.FK_TranJournals_TranHeaders" />
+        <EntityTypeShape EntityType="DBAJModel.vw_Users" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DBAJModel.EmbroideryFirmPriceSetting" Width="1.5" PointX="11.25" PointY="20.125" />
+        <AssociationConnector Association="DBAJModel.FK_EmbroideryCompanyPriceSettings_JariCompanies" />
+        <AssociationConnector Association="DBAJModel.FK_EmbroideryCompanyPriceSettings_ShadeCards" />
+        <EntityTypeShape EntityType="DBAJModel.EmbroideryFirm" Width="1.5" PointX="3" PointY="17.625" />
+        <AssociationConnector Association="DBAJModel.FK_EmbroideryFirmPriceSettings_EmbroideryFirms" />
+        <AssociationConnector Association="DBAJModel.FK_Companies_JariCompanies" />
+        <AssociationConnector Association="DBAJModel.FK_TranDetails_EmbroideryCompanies" />
+        <AssociationConnector Association="DBAJModel.FK_TranHeaders_Companies" />
+        <AssociationConnector Association="DBAJModel.FK_TranJournals_Companies" />
+        <EntityTypeShape EntityType="DBAJModel.EmbroideryFirmLocation" Width="1.5" PointX="8.25" PointY="16.875" />
+        <EntityTypeShape EntityType="DBAJModel.vw_EmbroideryFirms" Width="1.5" PointX="6.375" PointY="6.75" />
+        <AssociationConnector Association="DBAJModel.FK_EmbroideryFirmLocations_EmbroideryFirms" />
+        <AssociationConnector Association="DBAJModel.FK_EmbroideryFirmLocations_JariCompanies" />
+        <AssociationConnector Association="DBAJModel.FK_TranHeaders_EmbroideryCompanyLocations" />
+        <EntityTypeShape EntityType="DBAJModel.vw_EmbroideryFirmPriceSettings" Width="1.5" PointX="7.375" PointY="0.75" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
