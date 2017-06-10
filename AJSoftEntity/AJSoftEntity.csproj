@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E2485A9C-31D8-4638-8133-47CD3FDDBB92}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AJSoftEntity</RootNamespace>
+    <AssemblyName>AJSoftEntity</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AJSoftDAL\AJ.cs">
+      <Link>AJ.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\EmbroideryFirm.cs">
+      <Link>EmbroideryFirm.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\EmbroideryFirmLocation.cs">
+      <Link>EmbroideryFirmLocation.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\EmbroideryFirmPriceSetting.cs">
+      <Link>EmbroideryFirmPriceSetting.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\FinanceSale.cs">
+      <Link>FinanceSale.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\f_split_Result.cs">
+      <Link>f_split_Result.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\JariCompany.cs">
+      <Link>JariCompany.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\Lookup.cs">
+      <Link>Lookup.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\Role.cs">
+      <Link>Role.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\ShadeCard.cs">
+      <Link>ShadeCard.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\SiteConfig.cs">
+      <Link>SiteConfig.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\State.cs">
+      <Link>State.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\TranDetail.cs">
+      <Link>TranDetail.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\TranHeader.cs">
+      <Link>TranHeader.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\TranJournal.cs">
+      <Link>TranJournal.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\User.cs">
+      <Link>User.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\vw_EmbroideryFirmPriceSettings.cs">
+      <Link>vw_EmbroideryFirmPriceSettings.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\vw_EmbroideryFirms.cs">
+      <Link>vw_EmbroideryFirms.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\vw_ShadeCards.cs">
+      <Link>vw_ShadeCards.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\vw_Users.cs">
+      <Link>vw_Users.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\AJSoftDAL\YarnType.cs">
+      <Link>YarnType.cs</Link>
+      <DependentUpon>AJ.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\CommonFunction.cs" />
+    <Compile Include="Classes\CommonMsg.cs" />
+    <Compile Include="Classes\Constants.cs" />
+    <Compile Include="Classes\EmbFirmLocationVM.cs" />
+    <Compile Include="Classes\EntityNames.cs" />
+    <Compile Include="Classes\EnumData.cs" />
+    <Compile Include="Classes\Util.cs" />
+    <Compile Include="Grid\Filter.cs" />
+    <Compile Include="Grid\GridModelBinder.cs" />
+    <Compile Include="Grid\GridSettings.cs" />
+    <Compile Include="Grid\Rule.cs" />
+    <Compile Include="Helper\LinqExtensions.cs" />
+    <Compile Include="Helper\StringEnum.cs" />
+    <Compile Include="Helper\WhereOperation.cs" />
+    <Compile Include="Metadata\CompaniesMetadata.cs" />
+    <Compile Include="Metadata\EmbroideryFirmLocationsMetadata.cs" />
+    <Compile Include="Metadata\EmbroideryFirmPricingMetadata.cs" />
+    <Compile Include="Metadata\JariCompanyMetadata.cs" />
+    <Compile Include="Metadata\ShadeCardMetadata.cs" />
+    <Compile Include="Metadata\UsersMetadata.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\AJSoftDAL\AJ.tt">
+      <Link>AJ.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AJ.cs</LastGenOutput>
+      <CustomToolNamespace>AJSoftEntity</CustomToolNamespace>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

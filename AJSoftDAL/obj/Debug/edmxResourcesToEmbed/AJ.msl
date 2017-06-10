@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DBAJModelStoreContainer" CdmEntityContainer="DBAJEntities">
+    <FunctionImportMapping FunctionName="DBAJModel.Store.f_split" FunctionImportName="f_split">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DBAJModel.f_split_Result">
+          <ScalarProperty Name="val" ColumnName="val" />
+          <ScalarProperty Name="seq" ColumnName="seq" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="FinanceSales">
+      <EntityTypeMapping TypeName="DBAJModel.FinanceSale">
+        <MappingFragment StoreEntitySet="FinanceSales">
+          <ScalarProperty Name="InvoicedAmt" ColumnName="InvoicedAmt" />
+          <ScalarProperty Name="TotalInvCases" ColumnName="TotalInvCases" />
+          <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+          <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Week" ColumnName="Week" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+          <ScalarProperty Name="FinanceSaleId" ColumnName="FinanceSaleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JariCompanies">
+      <EntityTypeMapping TypeName="DBAJModel.JariCompany">
+        <MappingFragment StoreEntitySet="JariCompanies">
+          <ScalarProperty Name="ActivationEndDate" ColumnName="ActivationEndDate" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="JariCompanyName" ColumnName="JariCompanyName" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lookups">
+      <EntityTypeMapping TypeName="DBAJModel.Lookup">
+        <MappingFragment StoreEntitySet="Lookups">
+          <ScalarProperty Name="LookupGroup" ColumnName="LookupGroup" />
+          <ScalarProperty Name="LookupName" ColumnName="LookupName" />
+          <ScalarProperty Name="LookupId" ColumnName="LookupId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="DBAJModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleGroup" ColumnName="RoleGroup" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShadeCards">
+      <EntityTypeMapping TypeName="DBAJModel.ShadeCard">
+        <MappingFragment StoreEntitySet="ShadeCards">
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="ShadeImage" ColumnName="ShadeImage" />
+          <ScalarProperty Name="ShadeName" ColumnName="ShadeName" />
+          <ScalarProperty Name="YarnTypeId" ColumnName="YarnTypeId" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+          <ScalarProperty Name="ShadeId" ColumnName="ShadeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SiteConfigs">
+      <EntityTypeMapping TypeName="DBAJModel.SiteConfig">
+        <MappingFragment StoreEntitySet="SiteConfigs">
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SiteConfigId" ColumnName="SiteConfigId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="States">
+      <EntityTypeMapping TypeName="DBAJModel.State">
+        <MappingFragment StoreEntitySet="States">
+          <ScalarProperty Name="StateName2Char" ColumnName="StateName2Char" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TranDetails">
+      <EntityTypeMapping TypeName="DBAJModel.TranDetail">
+        <MappingFragment StoreEntitySet="TranDetails">
+          <ScalarProperty Name="IsAdjustmentAmt" ColumnName="IsAdjustmentAmt" />
+          <ScalarProperty Name="IsPercentage" ColumnName="IsPercentage" />
+          <ScalarProperty Name="IsDiscount" ColumnName="IsDiscount" />
+          <ScalarProperty Name="TranDetailNotes" ColumnName="TranDetailNotes" />
+          <ScalarProperty Name="TranDetailAmt" ColumnName="TranDetailAmt" />
+          <ScalarProperty Name="InvoiceTranHeaderId" ColumnName="InvoiceTranHeaderId" />
+          <ScalarProperty Name="ShadeId" ColumnName="ShadeId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+          <ScalarProperty Name="TranHeaderId" ColumnName="TranHeaderId" />
+          <ScalarProperty Name="TranDetailId" ColumnName="TranDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TranHeaders">
+      <EntityTypeMapping TypeName="DBAJModel.TranHeader">
+        <MappingFragment StoreEntitySet="TranHeaders">
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+          <ScalarProperty Name="BillingTerms" ColumnName="BillingTerms" />
+          <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+          <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+          <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+          <ScalarProperty Name="CheckNo" ColumnName="CheckNo" />
+          <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+          <ScalarProperty Name="PaidBy" ColumnName="PaidBy" />
+          <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+          <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+          <ScalarProperty Name="TranStatus" ColumnName="TranStatus" />
+          <ScalarProperty Name="TranSubType" ColumnName="TranSubType" />
+          <ScalarProperty Name="TranType" ColumnName="TranType" />
+          <ScalarProperty Name="CompanyLocationId" ColumnName="CompanyLocationId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+          <ScalarProperty Name="TranHeaderId" ColumnName="TranHeaderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TranJournals">
+      <EntityTypeMapping TypeName="DBAJModel.TranJournal">
+        <MappingFragment StoreEntitySet="TranJournals">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="DR" ColumnName="DR" />
+          <ScalarProperty Name="CR" ColumnName="CR" />
+          <ScalarProperty Name="TranJournalNotes" ColumnName="TranJournalNotes" />
+          <ScalarProperty Name="Reference" ColumnName="Reference" />
+          <ScalarProperty Name="CompanyLocationId" ColumnName="CompanyLocationId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+          <ScalarProperty Name="TranHeaderId" ColumnName="TranHeaderId" />
+          <ScalarProperty Name="TranJournalId" ColumnName="TranJournalId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="DBAJModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="YarnTypes">
+      <EntityTypeMapping TypeName="DBAJModel.YarnType">
+        <MappingFragment StoreEntitySet="YarnTypes">
+          <ScalarProperty Name="YarnColorCode" ColumnName="YarnColorCode" />
+          <ScalarProperty Name="YarnTypeName" ColumnName="YarnTypeName" />
+          <ScalarProperty Name="YarnTypeId" ColumnName="YarnTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_ShadeCards">
+      <EntityTypeMapping TypeName="DBAJModel.vw_ShadeCards">
+        <MappingFragment StoreEntitySet="vw_ShadeCards">
+          <ScalarProperty Name="JariCompanyName" ColumnName="JariCompanyName" />
+          <ScalarProperty Name="YarnColorCode" ColumnName="YarnColorCode" />
+          <ScalarProperty Name="YarnTypeName" ColumnName="YarnTypeName" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="ShadeImage" ColumnName="ShadeImage" />
+          <ScalarProperty Name="ShadeName" ColumnName="ShadeName" />
+          <ScalarProperty Name="YarnTypeId" ColumnName="YarnTypeId" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+          <ScalarProperty Name="ShadeId" ColumnName="ShadeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_Users">
+      <EntityTypeMapping TypeName="DBAJModel.vw_Users">
+        <MappingFragment StoreEntitySet="vw_Users">
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleGroup" ColumnName="RoleGroup" />
+          <ScalarProperty Name="ActivationEndDate" ColumnName="ActivationEndDate" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="JariCompanyName" ColumnName="JariCompanyName" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmbroideryFirmPriceSettings">
+      <EntityTypeMapping TypeName="DBAJModel.EmbroideryFirmPriceSetting">
+        <MappingFragment StoreEntitySet="EmbroideryFirmPriceSettings">
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="ShadeId" ColumnName="ShadeId" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+          <ScalarProperty Name="EmbroideryFirmId" ColumnName="EmbroideryFirmId" />
+          <ScalarProperty Name="EmbroideryFirmPriceSettingsId" ColumnName="EmbroideryFirmPriceSettingsId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmbroideryFirms">
+      <EntityTypeMapping TypeName="DBAJModel.EmbroideryFirm">
+        <MappingFragment StoreEntitySet="EmbroideryFirms">
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="EmbroideryFirmName" ColumnName="EmbroideryFirmName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+          <ScalarProperty Name="EmbroideryFirmId" ColumnName="EmbroideryFirmId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmbroideryFirmLocations">
+      <EntityTypeMapping TypeName="DBAJModel.EmbroideryFirmLocation">
+        <MappingFragment StoreEntitySet="EmbroideryFirmLocations">
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="BillingTerms" ColumnName="BillingTerms" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsPrimaryLocation" ColumnName="IsPrimaryLocation" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+          <ScalarProperty Name="EmbroideryFirmId" ColumnName="EmbroideryFirmId" />
+          <ScalarProperty Name="EmbroideryFirmLocationId" ColumnName="EmbroideryFirmLocationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_EmbroideryFirms">
+      <EntityTypeMapping TypeName="DBAJModel.vw_EmbroideryFirms">
+        <MappingFragment StoreEntitySet="vw_EmbroideryFirms">
+          <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
+          <ScalarProperty Name="BillingTerms" ColumnName="BillingTerms" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+          <ScalarProperty Name="EmbroideryFirmLocationId" ColumnName="EmbroideryFirmLocationId" />
+          <ScalarProperty Name="TotalLocations" ColumnName="TotalLocations" />
+          <ScalarProperty Name="JariCompanyName" ColumnName="JariCompanyName" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="EmbroideryFirmName" ColumnName="EmbroideryFirmName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+          <ScalarProperty Name="EmbroideryFirmId" ColumnName="EmbroideryFirmId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_EmbroideryFirmPriceSettings">
+      <EntityTypeMapping TypeName="DBAJModel.vw_EmbroideryFirmPriceSettings">
+        <MappingFragment StoreEntitySet="vw_EmbroideryFirmPriceSettings">
+          <ScalarProperty Name="RowNumber" ColumnName="RowNumber" />
+          <ScalarProperty Name="IsDefaultPrice" ColumnName="IsDefaultPrice" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="EmbroideryFirmPriceSettingsId" ColumnName="EmbroideryFirmPriceSettingsId" />
+          <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ShadeImage" ColumnName="ShadeImage" />
+          <ScalarProperty Name="ShadeName" ColumnName="ShadeName" />
+          <ScalarProperty Name="YarnColorCode" ColumnName="YarnColorCode" />
+          <ScalarProperty Name="YarnTypeName" ColumnName="YarnTypeName" />
+          <ScalarProperty Name="YarnTypeId" ColumnName="YarnTypeId" />
+          <ScalarProperty Name="JariCompanyId" ColumnName="JariCompanyId" />
+          <ScalarProperty Name="ShadeId" ColumnName="ShadeId" />
+          <ScalarProperty Name="EmbroideryFirmId" ColumnName="EmbroideryFirmId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
