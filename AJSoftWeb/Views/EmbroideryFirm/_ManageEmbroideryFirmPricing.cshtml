@@ -1,0 +1,143 @@
+﻿@model AJSoftEntity.EmbroideryFirmPriceSetting
+@using AJSoftEntity
+@{ 
+    vw_ShadeCards oShadeCard = ViewBag.oShadeCard;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse($("#Manage-PriceSetting-Form"));
+        $.validator.addMethod(
+       "date",
+       function (value, element) {
+           var bits = value.match(/([0-9]+)/gi), str;
+           if (!bits)
+               return this.optional(element) || false;
+           str = bits[1] + '-' + bits[0] + '-' + bits[2];
+           return this.optional(element) || !/Invalid|NaN/.test(new Date(str));
+       },
+       "Please enter date in valid format dd-mm-yyyy"
+   );
+        jQuery('#StartDate').datetimepicker({
+            //dateFormat: "dd-MM-yyyy",
+            format: "DD-MM-YYYY",
+            pickTime: false,
+        });
+
+        
+    });
+
+    function SaveEmbFirmPrice() {
+        if ($('#Manage-PriceSetting-Form').valid()) {
+            $('#ManageData').block();
+
+            $("#StartDate").val(setDateFormatforCSharp($("#StartDate").val()));
+
+            var formData = $("#Manage-PriceSetting-Form").serialize();
+            $.post("@Url.Content("~/EmbroideryFirm/SaveEmbroideryFirmPricing")", formData, function (data) {
+                if (data.success) {
+                    $('#dv_PopUpEmbFirmPrice').modal('hide');
+                    SuccessMessage(data.message);
+                    $('#PriceSettingDataGrid').trigger('reloadGrid');
+                } else {
+                    $('#ManageData').unblock();
+                    ErrorMessage(data.message);
+                }
+            });
+        }
+    }
+
+    //Delete
+    function Delete(entityId) {
+        if (confirm("Are you sure you want to return the settings to the default?")) {
+            $('#PriceSettingDataGrid').block();
+            $.post("/EmbroideryFirm/DeleteEmbroideryFirmPricing?id=" + entityId, function (data, status) {
+                $('#PriceSettingDataGrid').unblock();
+                if (data.success) {
+                    $('#dv_PopUpEmbFirmPrice').modal('hide');
+                    SuccessMessage(data.message);
+                    $('#PriceSettingDataGrid').trigger('reloadGrid');
+                }
+                else {
+                    ErrorMessage(data.message);
+                }
+            });
+        }
+    }
+
+    function Cancel() {
+        $('#dv_PopUpEmbFirmPrice').modal('hide');
+    }
+</script>
+<div class="modal-dialog" id="ManageData">
+    <div class="panel form-horizontal">
+        <div class="modal-header">
+            <button data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Manage Custom Pricing</h4>
+        </div>
+        <div class="modal-body">
+            @using (Html.BeginForm("", "", FormMethod.Post, new { Id = "Manage-PriceSetting-Form", @class = "form-horizontal" }))
+            {
+                @Html.HiddenFor(p => p.EmbroideryFirmPriceSettingsId)
+                @Html.HiddenFor(p => p.EmbroideryFirmId)
+                @Html.HiddenFor(p => p.JariCompanyId)
+                @Html.HiddenFor(p => p.ShadeId)
+
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Shade Name</label>
+                    <div class="col-lg-9">
+                        <div class="form-control-static text-left">@oShadeCard.ShadeName</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Yarn Type</label>
+                    <div class="col-lg-9">
+                        <div class="form-control-static text-left">@oShadeCard.YarnTypeName</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Description</label>
+                    <div class="col-lg-9">
+                        <div class="form-control-static text-left">@oShadeCard.Description</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Price&nbsp;<span class="light-red">*</span></label>
+                    <div class="col-lg-5">
+                        @Html.TextBoxFor(p => p.Price, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.Price)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Start Date&nbsp;<span class="light-red">*</span></label>
+                    <div class="col-lg-5">
+                        @Html.TextBoxFor(p => p.StartDate, "{0:dd-MM-yyyy}", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.StartDate)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Shade Image</label>
+                    <div class="col-lg-9">
+                        @if (oShadeCard.ShadeImage != null)
+                        {
+                            <img id="image_upload_preview" name="image_upload_preview" style="width:200px;max-height:80px;" src='@("data:image/png;base64, " + Convert.ToBase64String(oShadeCard.ShadeImage, 0, oShadeCard.ShadeImage.Length))' alt="your image" />
+                        }
+                        else
+                        {
+                            <img id="image_upload_preview" name="image_upload_preview" style="width:200px;max-height:80px;" src="/Content/images/no-image-available.png" alt="your image" />
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="panel-footer text-center admin-form dark-bg">
+            @if (Model.EmbroideryFirmPriceSettingsId != 0)
+            {
+                <button data-dismiss="modal" class="button returntodefaultbutton" type="button" onclick="Delete('@Model.EmbroideryFirmPriceSettingsId');">Return to Default</button>
+            }
+            <div>
+                <button class="button btn-primary" type="submit" onclick="SaveEmbFirmPrice();"> Save </button>&nbsp;
+                <button data-dismiss="modal" class="button" style="background:#ccc;" type="button" onclick="Cancel();">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

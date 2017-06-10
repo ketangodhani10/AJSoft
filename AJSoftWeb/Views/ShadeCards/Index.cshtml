@@ -1,0 +1,163 @@
+﻿@{
+    ViewBag.Title = "Shade Cards";
+}
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        var grid_selector = "#ShadeCardsDataGrid";
+        var pager_selector = "#ShadeCardsDataPager";
+        var ddlYarnTypes = '@ViewBag.lstYarnTypes';
+
+        jQuery(grid_selector).jqGrid({
+            url: '@Url.Action("GetGridData", "ShadeCards")',
+            viewrecords: true, sortname: 'DisplayOrder', sortorder: "asc",
+            colNames: ['ShadeId', 'YarnTypeId', 'JariCompanyId', 'DisplayOrder', 'Shade Name', 'Price', 'Description', 'Image', 'Start Date', 'Yarn Type'],
+            colModel: [
+                        { name: 'ShadeId', index: 'ShadeId', width: 0, hidden: true, key: true },
+                        { name: 'YarnTypeId', index: 'YarnTypeId', width: 0, hidden: true },
+                        { name: 'JariCompanyId', index: 'JariCompanyId', width: 0, hidden: true },
+                        { name: 'DisplayOrder', index: 'DisplayOrder', width: 0, hidden: true },
+                        { name: 'ShadeName', index: 'ShadeName', width: 15, search: true, searchoptions: JQ_sopt_string, formatter: TitleFormatter },
+                        { name: 'Price', index: 'Price', width: 8, align: 'right', search: true, searchoptions: JQ_sopt_int },
+                        { name: 'Description', index: 'Description', width: 20, search: true, searchoptions: JQ_sopt_string },
+                        { name: 'ShadeImage', index: 'ShadeImage', width: 11, search: false, formatter: ImageFormatter },
+                        {
+                            name: 'StartDate', index: 'StartDate', width: 11, align: "center", formatter: "date", formatoptions: { newformat: "d/m/Y" }, datefmt: 'd/m/Y', searchoptions: {
+                                sopt: ['ge', 'eq', 'le'], dataInit: function (el) {
+                                    $(el).datepicker({
+                                        dateFormat: JQry_DatePickerFormat,
+                                        onSelect: function (dateText, inst) { $("#ShadeCardsDataGrid")[0].triggerToolbar(); }
+                                    });
+                                }
+                            }
+                        },
+                        { name: 'YarnTypeName', index: 'YarnTypeName', width: 8, align: 'center', search: true, stype: 'select', searchoptions: { sopt: ['eq'], value: ddlYarnTypes } },
+            ],
+            ondblClickRow: function (rowId) {
+                var rowData = jQuery(this).getRowData(rowId);
+                ManageShadeCards(rowData["ShadeId"]);
+            },
+            rowNum: JQ_RowNum_Opt,
+            rowList: JQ_Paging_Opt,
+            pager: pager_selector,
+            height: '100%',
+            autowidth: true,
+            cmTemplate: { title: false },
+            datatype: 'json'
+
+        }).navGrid(pager_selector, { view: false, del: false, add: false, edit: false, search: false, refresh: true }
+        ).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: 'cn', searchOperators: true });
+
+        var StartRowIndex = 0;
+        var EndRowIndex = 0;
+        jQuery(grid_selector).jqGrid('sortableRows', {
+            start: function (ev, ui) {
+                var item = ui.item[0], ri = item.rowIndex, itemId = item.id;
+                StartRowIndex = ri; //ri= old row index where it picked
+            },
+            update: function (ev, ui) {
+                var item = ui.item[0], ri = item.rowIndex, itemId = item.id;
+                EndRowIndex = ri;//ri= new row index where it drop
+
+                if (ri > 1 && ri < this.rows.length - 1) {
+                    if (StartRowIndex > EndRowIndex) {
+                        ReorderShades(itemId, this.rows[ri + 1].id, true);
+                    } else {
+                        ReorderShades(itemId, this.rows[ri - 1].id, true);
+                    }
+                }
+                else if (ri > 1) {
+                    ReorderShades(itemId, this.rows[ri - 1].id, true);
+                }
+                else if (ri < this.rows.length - 1) {
+                    ReorderShades(itemId, this.rows[ri + 1].id, false);
+                }
+            }
+        });
+
+        $(grid_selector).bind("sortstart", function (event, ui) {
+            var item = ui.item[0], ri = item.rowIndex, itemId = item.id;
+            $("#ShadeCardsDataGrid").jqGrid('setRowData', itemId, false, "tr-selected-ShadeCards");
+        });
+
+    });
+
+    function TitleFormatter(cellvalue, options, rowObject) {
+        return "<a href='javascript:void(0);' class='jqgridatag' onclick='ManageShadeCards(" + rowObject["ShadeId"] + ");'>" + cellvalue + "</a>";
+    }
+
+    function ImageFormatter(cellvalue, options, rowObject) {
+        return '<img style="width:100%;height:50px;" src="' + cellvalue + '"/>';
+    }
+
+    function ManageShadeCards(entityId) {
+        $('#dv_PopUp').html("");
+        $("#dv_PopUp").load('@Url.Content("~/ShadeCards/ManageShadeCard?id=")' + entityId, function () {
+            $('#dv_PopUp').modal('show');
+        });
+    }
+
+    //Reorder Queue Post
+    function ReorderShades(selectedId, affectedId) {
+        $("#content").block();
+        $.post("/ShadeCards/MoveShade?selectedId=" + selectedId + "&affectedId=" + affectedId, function (data, status) {
+            if (data.success) {
+                $('#ShadeCardsDataGrid').trigger('reloadGrid');
+                SuccessMessage(data.message);
+            }
+            else {
+                ErrorMessage(data.message);
+            }
+            $("#content").unblock();
+        });
+    }
+
+</script>
+
+
+@Html.Partial("_ResultMessage")
+
+<header id="topbar">
+    <div class="topbar-left">
+        <ol class="breadcrumb">
+            <li class="crumb-active">
+                <a href="/Home/Index">Dashboard</a>
+            </li>
+            <li class="crumb-trail">Config</li>
+            <li class="crumb-link">
+                <a href="/ShadeCards/Index">Shade Cards</a>
+            </li>
+        </ol>
+    </div>
+</header>
+
+<!-- Begin: Content -->
+<section id="content" class="table-layout animated fadeIn">
+
+    <!-- begin: .tray-center -->
+    <div class="tray tray-center va-t posr">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-visible">
+                    <div class="panel-heading">
+                        <div class="panel-title hidden-xs">
+                            <span class="glyphicon glyphicon-tasks"></span><span>Shade Cards</span>
+                            <button type="button" class="btn btn-sm btn-rounded btn-dark pull-right" data-toggle="modal" onclick="ManageShadeCards(0);">Add Shade</button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="jqgrid" id="content">
+                            <table id="ShadeCardsDataGrid"></table>
+                            <div id="ShadeCardsDataPager"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: .tray-center -->
+</section>
+<!-- End: Content -->
+
+<div id="dv_PopUp" class="modal fade" role="dialog"></div>

@@ -1,0 +1,211 @@
+﻿@model AJSoftEntity.ShadeCard
+@using AJSoftEntity.Classes
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse($("#Manage-Shade-Form"));
+        $.validator.addMethod(
+       "date",
+       function (value, element) {
+           var bits = value.match(/([0-9]+)/gi), str;
+           if (!bits)
+               return this.optional(element) || false;
+           str = bits[1] + '-' + bits[0] + '-' + bits[2];
+           return this.optional(element) || !/Invalid|NaN/.test(new Date(str));
+       },
+       "Please enter date in valid format dd-mm-yyyy"
+   );
+
+        $(".chosen").chosen();
+        resizeChosen();
+
+        jQuery('#StartDate').datetimepicker({
+            //dateFormat: "dd-MM-yyyy",
+            format: "DD-MM-YYYY",
+            pickTime: false,
+        });
+
+        if ('@Model.ShadeId' == '0') {
+            $("#StartDate").val('@DateTime.UtcNow').change();
+        }
+
+        $("#UserShadeImage").change(function () {
+            readURL(this);
+        });
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#image_upload_preview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function SaveShade() {
+        if ($('#Manage-Shade-Form').valid()) {
+            $('#ManageData').block();
+
+            $("#StartDate").val(setDateFormatforCSharp($("#StartDate").val()));
+
+            var o = {};
+            var a = $("#Manage-Shade-Form").serializeArray();
+            $.each(a, function () {
+                if (o[this.name]) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+
+            var fileUpload = $("#UserShadeImage").get(0);
+            var files = fileUpload.files;
+
+            // Create FormData object
+            var fileData = new FormData();
+            if (files[0] != null)
+            { fileData.append(files[0].name, files[0]); } //Image file
+
+            fileData.append('objShadeCard', JSON.stringify(o)); //other form Data
+
+            var saveData = $.ajax({
+                type: 'POST',
+                url: "@Url.Content("~/ShadeCards/SaveShadeCard")",
+                data: fileData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,
+                success: function (data) {
+                    if (data.success) {
+                        $('#dv_PopUp').modal('hide');
+                        SuccessMessage(data.message);
+                        $('#ShadeCardsDataGrid').trigger('reloadGrid');
+                    } else {
+                        $('#ManageData').unblock();
+                        ErrorMessage(data.message);
+                    }
+                },
+                error: function (resultData) {
+                    $('#ManageData').unblock();
+                    ErrorMessage(resultData);
+                }
+            });
+        }
+    }
+
+    //Delete
+    function DeleteShade(entityId) {
+        if (confirm("Are you sure you want to Delete this record?")) {
+            $('#ShadeCardsDataGrid').block();
+            $.post("/ShadeCards/DeleteShade?id=" + entityId, function (data, status) {
+                $('#ShadeCardsDataGrid').unblock();
+                if (data.success) {
+                    $('#dv_PopUp').modal('hide');
+                    SuccessMessage(data.message);
+                    $('#ShadeCardsDataGrid').trigger('reloadGrid');
+                }
+                else {
+                    ErrorMessage(data.message);
+                }
+            });
+        }
+    }
+
+    function Cancel() {
+        $('#dv_PopUp').modal('hide');
+    }
+</script>
+
+<div class="modal-dialog" id="ManageData">
+    <div class="panel form-horizontal">
+        <div class="modal-header">
+            <button data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Manage Shade</h4>
+        </div>
+        <div class="modal-body">
+            @using (Html.BeginForm("", "", FormMethod.Post, new { Id = "Manage-Shade-Form", @class = "form-horizontal", enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(p => p.ShadeId)
+                @Html.HiddenFor(p => p.JariCompanyId)
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Shade Name&nbsp;<span class="light-red">*</span></label>
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(p => p.ShadeName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.ShadeName)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Yarn Type&nbsp;<span class="light-red">*</span></label>
+                    <div class="col-lg-9">
+                        @Html.DropDownListFor(p => p.YarnTypeId, new SelectList(ViewBag.lstYarnTypes as System.Collections.IEnumerable, "YarnTypeId", "YarnTypeName"), "--Select--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.YarnTypeId)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Price&nbsp;<span class="light-red">*</span></label>
+                    <div class="col-lg-5">
+                        @Html.TextBoxFor(p => p.Price, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.Price)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Description</label>
+                    <div class="col-lg-9">
+                        @Html.TextAreaFor(p => p.Description, new { @class = "form-control", @rows = "5" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Start Date</label>
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(p => p.StartDate, "{0:dd-MM-yyyy}", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.StartDate)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Shade Image</label>
+                    <div class="col-lg-9">
+                        @if (Model.ShadeImage != null)
+                        {
+                            <img id="image_upload_preview" name="image_upload_preview" style="width:200px;max-height:80px;" src='@("data:image/png;base64, " + Convert.ToBase64String(Model.ShadeImage, 0, Model.ShadeImage.Length))' alt="your image" />
+                        }
+                        else
+                        {
+                            <img id="image_upload_preview" name="image_upload_preview" style="width:200px;max-height:80px;" src="/Content/images/no-image-available.png" alt="your image" />
+                        }
+                        <label class="field prepend-icon append-button file">
+                            <span class="button btn-primary">Choose File</span>
+                            <input type="file" name="UserShadeImage" id="UserShadeImage" value="" accept="image/*" class="gui-file" style="display:none;">
+                            <input type="text" placeholder="Please Select A File" id="shadeUploader" class="gui-input" style="display:none;">
+                            <label class="field-icon" style="display:none;">
+                                <i class="fa fa-upload"></i>
+                            </label>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Display Order</label>
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(p => p.DisplayOrder, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.DisplayOrder)
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="panel-footer text-center admin-form dark-bg">
+            <div>
+                <button class="button btn-primary" type="submit" onclick="SaveShade();"> Save </button>&nbsp;
+                <button data-dismiss="modal" class="button" style="background:#ccc;" type="button" onclick="Cancel();">Cancel</button>
+            </div>
+            @if (Model.ShadeId != 0)
+            {
+                <button data-dismiss="modal" class="button deletebutton" type="button" onclick="DeleteShade('@Model.ShadeId');">Delete</button>
+            }
+        </div>
+
+    </div>
+</div>
+

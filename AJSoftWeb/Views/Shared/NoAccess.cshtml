@@ -1,0 +1,65 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>Jari |No Access </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="~/Content/images/favicon.png" />
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700'>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+
+    <!-- Theme CSS -->
+    <link href="~/Content/theme.css" rel="stylesheet" type="text/css" />
+
+    <!-- Admin Panels CSS -->
+    <link href="~/Content/adminpanels.css" rel="stylesheet" type="text/css" />
+
+    <!-- Admin Forms CSS -->
+    <link href="~/Content/admin-forms.css" rel="stylesheet" type="text/css" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body class="error-page external-alt sb-l-c sb-r-c onload-check">
+
+    <!-- Start: Main -->
+    <div id="main" class="animated fadeIn">
+
+        <!-- Start: Content-Wrapper -->
+        <section id="content_wrapper">
+            <!-- Begin: Content -->
+            <section id="content">
+                @Html.Partial("_ResultMessage")
+                <section class="pn" id="content">
+                    <div class="center-block mt50 mw800">
+                        <h1 class="error-title"> 403! </h1>
+                        <h2 class="error-subtitle">Sorry, you don't have access to perform this action.</h2>
+                    </div>
+                </section>
+            </section>
+            <!-- End: Content -->
+
+        </section>
+        <!-- End: Content-Wrapper -->
+
+    </div>
+    <!-- End: Main -->
+    <!-- BEGIN: PAGE SCRIPTS -->
+    <!-- jQuery -->
+    <!-- END: PAGE SCRIPTS -->
+    <!-- END: PAGE SCRIPTS -->
+
+</body>
+</html>
+

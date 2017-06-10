@@ -1,0 +1,144 @@
+﻿@model  AJSoftEntity.Classes.EmbFirmLocationVM
+@using AJSoftEntity.Classes
+@using AJSoftEntity;
+@{
+    Layout = null;
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse($("#Manage-EmbroideryFirm-Form"));
+
+        if ('@Model.EmbroideryFirmId' == '@Guid.Empty') {
+            $('#IsActive').attr('checked', true);
+            $('#BillingTerms').val(90);
+        }
+    })
+
+    function Save() {
+        if ($('#Manage-EmbroideryFirm-Form').valid()) {
+            $('#ManageEmbroideryFirm').block();
+        }
+        else {
+            ErrorMessage("Missing required data. Please review the form.");
+        }
+    }
+    function Cancel() {
+        window.location.href = "/EmbroideryFirm/Index";
+    }
+
+    function Delete(entityId) {
+        if (confirm("Are you sure you want to Delete this record?")) {
+            $('#ManageEmbroideryFirm').block();
+            $.post("/EmbroideryFirm/Delete?id=" + entityId, function (data, status) {
+                $('#ManageEmbroideryFirm').unblock();
+                if (data.success) {
+                    SuccessMessage(data.message);
+                    window.location.href = "/EmbroideryFirm/Index";
+                }
+                else {
+                    ErrorMessage(data.message);
+                }
+            });
+        }
+    }
+
+</script>
+<div class="row">
+    <div class="col-md-12">
+        <div id="ManageEmbroideryFirm">
+            @using (Html.BeginForm("Save", "EmbroideryFirm", FormMethod.Post, new { Id = "Manage-EmbroideryFirm-Form", @class = "form-horizontal" }))
+            {
+                @Html.HiddenFor(p => p.JariCompanyId)
+                @Html.HiddenFor(p => p.EmbroideryFirmId)
+                @Html.HiddenFor(p => p.EmbroideryFirmLocationId)
+
+                <div class="section-divider mt25 ">
+                    <span class="white-bg">Embroidery Firm Details</span>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-2 control-label">Embroidery Firm Name&nbsp;<span class="light-red">*</span></label>
+                    <div class="col-lg-3">
+                        @Html.TextBoxFor(p => p.EmbroideryFirmName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.EmbroideryFirmName)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-2 control-label">IsActive ?</label>
+                    <div class="col-lg-8">
+                        <div class="contact-chk">
+                            <div class="checkbox-custom mt10 mr15 display-inline">
+                                @Html.CheckBoxFor(c => c.IsActive)
+                                <label for="IsActive"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                if (Model.EmbroideryFirmId == Guid.Empty)
+                {
+                    <div class="section-divider mt25 ">
+                        <span class="white-bg">Primary Location</span>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="textArea1">Terms</label>
+                        <div class="col-lg-3">
+                            @Html.DropDownListFor(p => p.BillingTerms, new SelectList(ViewBag.lstBillingTerms as System.Collections.IEnumerable, "Value", "text"), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="textArea2">Address1</label>
+                        <div class="col-lg-3">
+                            @Html.TextBoxFor(p => p.Address1, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="textArea2">Address2</label>
+                        <div class="col-lg-3">
+                            @Html.TextBoxFor(p => p.Address2, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="textArea2">City</label>
+                        <div class="col-lg-3">
+                            @Html.TextBoxFor(p => p.City, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="textArea2">Contact Person&nbsp;<span class="light-red">*</span></label>
+                        <div class="col-lg-3">
+                            @Html.TextBoxFor(p => p.ContactPerson, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(p => p.ContactPerson)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="textArea2">Phone&nbsp;<span class="light-red">*</span></label>
+                        <div class="col-lg-3">
+                            @Html.TextBoxFor(p => p.Phone, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(p => p.Phone)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="textArea2">Email</label>
+                        <div class="col-lg-3">
+                            @Html.TextBoxFor(p => p.Email, new { @class = "form-control" })
+                        </div>
+                    </div>
+                }
+                <div class="c"></div>
+                <div class="panel-footer text-center admin-form dark-bg">
+                    <button class="button btn-primary" type="submit" onclick="Save()">Save</button>
+                    <button class="button" type="reset" style="background:#ccc;" onclick="Cancel()"> Cancel </button>
+
+                    @if (Model.EmbroideryFirmId != Guid.Empty)
+                    {
+                        <button class="button deletebutton" type="button" onclick="Delete('@Model.EmbroideryFirmId');">Delete</button>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

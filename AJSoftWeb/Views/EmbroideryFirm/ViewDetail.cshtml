@@ -1,0 +1,105 @@
+﻿@using AJSoftWeb.Classes
+@using AJSoftEntity
+
+@{
+    ViewBag.Title = "View Detail";
+    User oUser = SiteUtility.GetCurrentUser();
+    var oJariCompany = SiteUtility.GetCurrentJariCompany(oUser);
+    var EmbroideryFirmId = ViewBag.EmbroideryFirmId;
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ('@EmbroideryFirmId' == "") {
+            $("#tabEmbroideryFirmLocations").css("display", "none");
+            $("#tabEmbroideryFirmPricing").css("display", "none");
+        }
+
+        if ('@ViewBag.tab' == 'EmbroideryFirmDetail') {
+            LoadEmbroideryFirmDetails();
+        }
+        else if ('@ViewBag.tab' == 'EmbroideryFirmPriceSettings') {
+            LoadEmbroideryFirmPricing();
+        }
+        else if ('@ViewBag.tab' == 'EmbroideryFirmLocations') {
+            LoadEmbroideryFirmLocations();
+        }
+    });
+
+    function LoadEmbroideryFirmDetails() {
+        $('#dvRow').block();
+        $("#dvLoadData").html('');
+        $("#dvLoadData").load("/EmbroideryFirm/Manage?id=" + '@EmbroideryFirmId', function () { $('#dvRow').unblock(); });
+        $("#tabEmbroideryFirmDetails").addClass("active");
+        $("#tabEmbroideryFirmLocations").removeClass("active");
+        $("#tabEmbroideryFirmPricing").removeClass("active");
+    }
+
+    function LoadEmbroideryFirmPricing() {
+        if ('@EmbroideryFirmId' != null) {
+            $('#dvRow').block();
+            $("#dvLoadData").html('');
+            $("#dvLoadData").load("/EmbroideryFirm/EmbroideryFirmPricing?id=" + '@EmbroideryFirmId', function () { $('#dvRow').unblock(); });
+            $("#tabEmbroideryFirmDetails").removeClass("active");
+            $("#tabEmbroideryFirmLocations").removeClass("active");
+            $("#tabEmbroideryFirmPricing").addClass("active");
+        }
+        else
+            alert("Please first Create a Embroidery Firm.");
+    }
+
+    function LoadEmbroideryFirmLocations() {
+        if ('@EmbroideryFirmId' != null) {
+            $('#dvRow').block();
+            $("#dvLoadData").html('');
+            $("#dvLoadData").load("/EmbroideryFirm/EmbroideryFirmLocations?id=" + '@EmbroideryFirmId', function () { $('#dvRow').unblock(); });
+            $("#tabEmbroideryFirmDetails").removeClass("active");
+            $("#tabEmbroideryFirmLocations").addClass("active");
+            $("#tabEmbroideryFirmPricing").removeClass("active");
+        }
+        else
+            alert("Please first Create a Embroidery Firm.");
+    }
+
+</script>
+<header id="topbar">
+    <div class="topbar-left">
+        <ol class="breadcrumb">
+            <li class="crumb-active">
+                <a href="/Home/Index">Dashboard</a>
+            </li>
+            <li class="crumb-active">Manage</li>
+            <li class="crumb-link">
+                <a href="/EmbroideryFirm/Index">Embroidery Firms</a>
+            </li>
+            <li class="crumb-link">
+                <a href="/EmbroideryFirm/ViewDetail?id=@(Convert.ToString(EmbroideryFirmId).ToUpper())&tab=EmbroideryFirmDetail">@ViewBag.EmbroideryFirmName</a>
+            </li>
+        </ol>
+    </div>
+</header>
+<section id="content" class="table-layout animated fadeIn">
+    <div class="bs-component" id="dvRow">
+        <div class="panel">
+            <div class="panel-heading">
+                <ul class="nav panel-tabs-border panel-tabs panel-tabs-left">
+                    <li class="" id="tabEmbroideryFirmDetails">
+                        <a href="javascript:void(0);" data-toggle="tab" aria-expanded="true" onclick="LoadEmbroideryFirmDetails();">Details</a>
+                    </li>
+                    <li class="" id="tabEmbroideryFirmLocations">
+                        <a href="javascript:void(0);" data-toggle="tab" aria-expanded="true" onclick="LoadEmbroideryFirmLocations();">Locations</a>
+                    </li>
+                    <li class="" id="tabEmbroideryFirmPricing">
+                        <a href="javascript:void(0);" data-toggle="tab" aria-expanded="true" onclick="LoadEmbroideryFirmPricing();">Pricing</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content pn br-n">
+                    <div class="tab-pane active" id="dvLoadData"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

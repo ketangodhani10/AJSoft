@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Yarn Types";
+}
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        var grid_selector = "#YarnTypesDataGrid";
+        var pager_selector = "#YarnTypesDataPager";
+        var ddlYarnTypes = '@ViewBag.lstYarnTypes';
+
+        jQuery(grid_selector).jqGrid({
+            url: '@Url.Action("GetGridData", "YarnTypes")',
+            viewrecords: true, sortname: 'YarnTypeId', sortorder: "asc",
+            colNames: ['YarnTypeId', 'Type Name', 'Color'],
+            colModel: [
+                        { name: 'YarnTypeId', index: 'YarnTypeId', width: 0, hidden: true, key: true },
+                        { name: 'YarnTypeName', index: 'YarnTypeName', width: 30, search: true, searchoptions: JQ_sopt_string },
+                        { name: 'YarnColorCode', index: 'YarnColorCode', width: 70, search: false, formatter: ColorFormatter },
+            ],
+            rowNum: JQ_RowNum_Opt,
+            rowList: JQ_Paging_Opt,
+            pager: pager_selector,
+            height: '100%',
+            autowidth: true,
+            cmTemplate: { title: false },
+            datatype: 'json'
+
+        }).navGrid(pager_selector, { view: false, del: false, add: false, edit: false, search: false, refresh: true }
+        ).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: 'cn', searchOperators: true });
+    });
+
+    function ColorFormatter(cellvalue, options, rowObject) {
+        return '<div style="height:20px;border: 1px solid #000;background:' + cellvalue + ';"></div>';
+    }
+    
+</script>
+
+
+@Html.Partial("_ResultMessage")
+
+<header id="topbar">
+    <div class="topbar-left">
+        <ol class="breadcrumb">
+            <li class="crumb-active">
+                <a href="/Home/Index">Dashboard</a>
+            </li>
+            <li class="crumb-trail">Config</li>
+            <li class="crumb-link">
+                <a href="/YarnTypes/Index">Yarn Types</a>
+            </li>
+        </ol>
+    </div>
+</header>
+
+<!-- Begin: Content -->
+<section id="content" class="table-layout animated fadeIn">
+
+    <!-- begin: .tray-center -->
+    <div class="tray tray-center va-t posr">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-visible">
+                    <div class="panel-heading">
+                        <div class="panel-title hidden-xs">
+                            <span class="glyphicon glyphicon-tasks"></span><span>Yarn Types</span>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="jqgrid" id="content">
+                            <table id="YarnTypesDataGrid"></table>
+                            <div id="YarnTypesDataPager"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: .tray-center -->
+</section>
+<!-- End: Content -->

@@ -1,0 +1,114 @@
+﻿<script type="text/javascript">
+    jQuery(function ($) {
+        var grid_selector = "#LocationDataGrid";
+        var pager_selector = "#LocationDataPager";
+
+        jQuery(grid_selector).jqGrid({
+            url: '@Url.Action("GetEmbroideryFirmLocationGridData", "EmbroideryFirm", new { EmbroideryFirmId = ViewBag.EmbroideryFirmId })',
+            viewrecords: true, sortname: 'ContactPerson', sortorder: "asc",
+            colNames: ['EmbroideryFirmLocationId', 'IsPrimaryLocation', 'EmbroideryFirmId', 'JariCompanyId', 'Contact Person', 'Phone', 'Address1', 'Address2', 'City', 'Email', 'Terms', 'Is Active?', 'Is Primary?'],
+            colModel: [
+                            { name: 'EmbroideryFirmLocationId', index: 'EmbroideryFirmLocationId', width: 0, hidden: true, key: true },
+                            { name: 'IsPrimaryLocation', index: 'IsPrimaryLocation', width: 0, hidden: true },
+                            { name: 'EmbroideryFirmId', index: 'EmbroideryFirmId', width: 0, hidden: true },
+                            { name: 'JariCompanyId', index: 'JariCompanyId', width: 0, hidden: true },
+                            { name: 'ContactPerson', index: 'ContactPerson', width: 15, search: true, searchoptions: JQ_sopt_string, formatter: TitleFormatter },
+                            { name: 'Phone', index: 'Phone', width: 10, search: true, searchoptions: JQ_sopt_string },
+                            { name: 'Address1', index: 'Address1', width: 25, search: true, searchoptions: JQ_sopt_string },
+                            { name: 'Address2', index: 'Address2', width: 15, search: true, searchoptions: JQ_sopt_string },
+                            { name: 'City', index: 'City', width: 10, search: true, searchoptions: JQ_sopt_string },
+                            { name: 'Email', index: 'Email', width: 15, search: true, searchoptions: JQ_sopt_string },
+                            { name: 'BillingTerms', index: 'BillingTerms', width: 5, align: "center", search: true, searchoptions: JQ_sopt_string },
+                            { name: 'Status', index: 'Status', width: 8, search: true, align: "center", stype: 'select', searchoptions: JQ_sopt_bool, formatter: BooleanFormatter },
+                            { name: 'Action', width: 10, sortable: false, formatter: ActionFormatter, search: false, align: "center" }
+            ],
+            ondblClickRow: function (rowId) {
+                var rowData = jQuery(this).getRowData(rowId);
+                ManageLocation(rowData["EmbroideryFirmLocationId"]);
+            },
+            rowNum: JQ_RowNum_Opt,
+            rowList: JQ_Paging_Opt,
+            pager: pager_selector,
+            height: '100%',
+            autowidth: true,
+            datatype: 'json',
+            cmTemplate: { title: false }
+
+        }).navGrid(pager_selector, { view: false, del: false, add: false, edit: false, search: false, refresh: true }
+        ).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: 'cn', searchOperators: true })
+    });
+
+    function BooleanFormatter(cellvalue, options, rowObject) {
+        if (cellvalue == true) {
+            return "Yes";
+        }
+        return "No";
+    }
+
+    function ActionFormatter(cellvalue, options, rowObject) {
+        if (rowObject["IsPrimaryLocation"] == false) {
+            return "<a href='javascript:void(0);' class='jqgridatag' onclick='SetPrimaryLocation(\"" + rowObject["EmbroideryFirmLocationId"] + "\")'>Make Primary</a>";
+        }
+        else if (rowObject["IsPrimaryLocation"] == true) {
+            return "Yes";
+        }
+        else {
+            return "-";
+        }
+    }
+
+    function TitleFormatter(cellvalue, options, rowObject) {
+        return "<a href='javascript:void(0);' class='jqgridatag' onclick='ManageLocation(\"" + rowObject["EmbroideryFirmLocationId"] + "\");'>" + cellvalue + "</a>";
+    }
+
+    function ManageLocation(entityId) {
+        $('#dv_PopUpLocation').html("");
+        $("#dv_PopUpLocation").load('@Url.Content("~/EmbroideryFirm/ManageEmbroideryFirmLocation?EmbroideryFirmLocationId=")' + entityId + '&EmbroideryFirmId=' + '@ViewBag.EmbroideryFirmId', function () {
+            $('#dv_PopUpLocation').appendTo("body").modal('show');
+        });
+    }
+
+    function SetPrimaryLocation(EmbroideryFirmLocationId) {
+        if (confirm("Are you sure you want to make this location as primary?")) {
+            $('#mnglocation').block();
+            $.post('@Url.Content("~/EmbroideryFirm/SetDefaultPrimaryLocation?id=")' + EmbroideryFirmLocationId, function (data) {
+                if (data.success) {
+                    $('#mnglocation').unblock();
+                    SuccessMessage(data.message);
+                    $('#LocationDataGrid').trigger('reloadGrid');
+                } else {
+                    $('#mnglocation').unblock();
+                    ErrorMessage(data.message);
+                }
+            });
+        }
+    }
+
+</script>
+<!-- Begin: Content -->
+<!-- begin: .tray-center -->
+<div class="tray tray-center va-t posr">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-visible" id="mnglocation">
+                <div class="panel-heading">
+                    <div class="panel-title hidden-xs">
+                        <span class="glyphicon glyphicon-tasks"></span><span>Embroidery Firm Locations</span>
+                        <input name="" type="button" class="btn btn-rounded btn-sm btn-dark pull-right" value="Add Location" onclick="ManageLocation(null);" />
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="jqgrid">
+                        <table id="LocationDataGrid"></table>
+                        <div id="LocationDataPager"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: .tray-center -->
+<!-- End: Content -->
+<div id="dv_PopUpLocation" class="modal fade" role="dialog"></div>
+
+

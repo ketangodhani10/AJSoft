@@ -1,0 +1,71 @@
+﻿@model AJSoftWeb.Models.LoginViewModel
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    ViewBag.Title = "Login";
+}
+
+
+
+<div class="admin-form theme-info mw500" id="login1">
+    <div class="row table-layout">
+        <samp title="Return to Dashboard">
+            <img style="max-width: 275px;" class="center-block img-responsive" alt="" src="~/Content/images/logo_.png">
+        </samp>
+    </div>
+    <div class="space-6"></div>
+    @if (!String.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div role="alert" class="alert alert-danger alert-dismissible fade in mt10">
+            <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+            <strong>Login Failed: </strong><p>@ViewBag.Error</p>
+        </div>
+    }
+    <div class="panel mt20 mb25">
+        <!-- end .form-header section -->
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @*@Html.AntiForgeryToken()*@
+            <div class="panel-body bg-light p25 pb15">
+                <div class="section">
+                    <label class="field-label text-muted fs18 mb10">Email</label>
+                    <label class="field prepend-icon" for="username">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "gui-input", @placeholder = "Enter Email" })
+                        <label class="field-icon" for="UserName">
+                            <i class="fa fa-user"></i>
+
+                        </label>
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </label>
+                </div>
+                <div class="section">
+                    @Html.LabelFor(m => m.Password, new { @class = "field-label text-muted fs18 mb10", @for = "Password" })
+                    <label class="field prepend-icon" for="username">
+                        @Html.PasswordFor(m => m.Password, new { @class = "gui-input", @placeholder = "Enter password" })
+                        <label class="field-icon" for="UserName">
+                            <i class="fa fa-lock"></i>
+
+                        </label>
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </label>
+                </div>
+            </div>
+            <!-- end .form-body section -->
+            <div class="panel-footer admin-form clearfix">
+                <button class="button btn-primary mr10 pull-right" type="submit">Sign In</button>
+                <label class="switch ib switch-primary mt10">
+                    @Html.CheckBoxFor(k => k.RememberMe, new { @name = "remember" })
+                    <label data-off="NO" data-on="YES" for="RememberMe"></label>
+                    <span>Remember me</span>
+                </label>
+            </div>
+            <!-- end .form-footer section -->
+        }
+    </div>
+    <div class="login-links">
+        <p>
+            <a title="Forgot Username" class="active" href="/Account/ForgotPassword?Forgot=Username">Forgot Username?</a>&nbsp;&nbsp;
+            <a title="Forgot Password" class="active" href="/Account/ForgotPassword">Forgot Password?</a>
+        </p>
+
+    </div>
+</div>

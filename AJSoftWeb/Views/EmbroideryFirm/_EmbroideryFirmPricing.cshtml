@@ -1,0 +1,108 @@
+﻿
+<script type="text/javascript">
+    jQuery(function ($) {
+        var grid_selector = "#PriceSettingDataGrid";
+        var pager_selector = "#PriceSettingDataPager";
+        var ddlYarnTypes = '@ViewBag.lstYarnTypes';
+
+        jQuery(grid_selector).jqGrid({
+            url: '@Url.Action("GetEmbroideryFirmPricingGridData", "EmbroideryFirm", new { EmbroideryFirmId = ViewBag.EmbroideryFirmId })',
+            viewrecords: true, sortname: 'DisplayOrder', sortorder: "asc",
+            colNames: ['RowNumber', 'DisplayOrder', 'EmbroideryFirmPriceSettingsId', 'JariCompanyId', 'EmbroideryFirmId', 'ShadeId', 'YarnTypeId', 'IsDefaultPrice', 'Shade Name', 'Price', 'Description', 'Shade Image', 'Start Date', 'Yarn Type'],
+            colModel: [
+                        { name: 'RowNumber', index: 'RowNumber', width: 0, hidden: true, key: true },
+                        { name: 'DisplayOrder', index: 'DisplayOrder', width: 0, hidden: true },
+                        { name: 'EmbroideryFirmPriceSettingsId', index: 'EmbroideryFirmPriceSettingsId', width: 0, hidden: true },
+                        { name: 'JariCompanyId', index: 'JariCompanyId', width: 0, hidden: true },
+                        { name: 'EmbroideryFirmId', index: 'EmbroideryFirmId', width: 0, hidden: true },
+                        { name: 'ShadeId', index: 'ShadeId', width: 0, hidden: true },
+                        { name: 'YarnTypeId', index: 'YarnTypeId', width: 0, hidden: true },
+                        { name: 'IsDefaultPrice', index: 'IsDefaultPrice', width: 0, hidden: true },
+                        { name: 'ShadeName', index: 'ShadeName', width: 15, search: true, searchoptions: JQ_sopt_string, formatter: TitleFormatter },
+                        { name: 'Price', index: 'Price', width: 8, align: 'right', search: true, searchoptions: JQ_sopt_int },
+                        { name: 'Description', index: 'Description', width: 20, search: true, searchoptions: JQ_sopt_string },
+                        { name: 'ShadeImage', index: 'ShadeImage', width: 11, search: false, formatter: ImageFormatter },
+                        {
+                            name: 'StartDate', index: 'StartDate', width: 11, align: "center", formatter: "date", formatoptions: { newformat: "d/m/Y" }, datefmt: 'd/m/Y', searchoptions: {
+                                sopt: ['ge', 'eq', 'le'], dataInit: function (el) {
+                                    $(el).datepicker({
+                                        dateFormat: JQry_DatePickerFormat,
+                                        onSelect: function (dateText, inst) { $("#PriceSettingDataGrid")[0].triggerToolbar(); }
+                                    });
+                                }
+                            }
+                        },
+                        { name: 'YarnTypeName', index: 'YarnTypeName', width: 8, align: 'center', search: true, stype: 'select', searchoptions: { sopt: ['eq'], value: ddlYarnTypes } },
+            ],
+            ondblClickRow: function (rowId) {
+                var rowData = jQuery(this).getRowData(rowId);
+                Manage(rowData["EmbroideryFirmPriceSettingsId"], rowData["ShadeId"]);
+            },
+            loadComplete: function () {
+                //do formating and count auto posts
+                var ids = jQuery("#PriceSettingDataGrid").getDataIDs();
+                var AutoIds = new Array();
+                for (var i = 0; i < ids.length; i++) {
+                    var cl = ids[i];
+                    var IsDefaultPrice = $("#PriceSettingDataGrid").getCell(cl, "IsDefaultPrice");
+
+                    if (IsDefaultPrice == 'false') {
+                        $("#PriceSettingDataGrid").jqGrid('setRowData', cl, false, "tr-custom-price");
+                    }
+                    jQuery("#PriceSettingDataGrid").setRowData(ids[i], { Action: "" });
+                }
+            },
+            rowNum: JQ_RowNum_Opt,
+            rowList: JQ_Paging_Opt,
+            pager: pager_selector,
+            height: '100%',
+            autowidth: true,
+            datatype: 'json',
+            cmTemplate: { title: false }
+        }).navGrid(pager_selector, { view: false, del: false, add: false, edit: false, search: false, refresh: true }
+        ).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: 'cn', searchOperators: true })
+    });
+
+    function TitleFormatter(cellvalue, options, rowObject) {
+        return "<a href='javascript:void(0);' class='jqgridatag' onclick='Manage(" + rowObject["EmbroideryFirmPriceSettingsId"] + "," + rowObject["ShadeId"] + ");'>" + cellvalue + "</a>";
+    }
+
+    function Manage(EmbroideryFirmPriceSettingsId, ShadeId) {
+        $('#dv_PopUpEmbFirmPrice').html("");
+        $("#dv_PopUpEmbFirmPrice").load('@Url.Content("~/EmbroideryFirm/ManageEmbroideryFirmPricing?EmbroideryFirmPriceSettingsId=")' + EmbroideryFirmPriceSettingsId + '&EmbroideryFirmId=@ViewBag.EmbroideryFirmId' + '&ShadeId=' + ShadeId, function () {
+            $('#dv_PopUpEmbFirmPrice').appendTo("body").modal('show');
+        });
+    }
+
+    function ImageFormatter(cellvalue, options, rowObject) {
+        return '<img style="width:100%;height:50px;" src="' + cellvalue + '"/>';
+    }
+
+</script>
+
+
+@Html.Partial("_ResultMessage")
+
+<!-- begin: .tray-center -->
+<div class="tray tray-center va-t posr">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-visible">
+                <div class="panel-heading">
+                    <div class="panel-title hidden-xs">
+                        <span class="glyphicon glyphicon-tasks"></span><span>Pricing</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="jqgrid">
+                        <table id="PriceSettingDataGrid"></table>
+                        <div id="PriceSettingDataPager"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: .tray-center -->
+
+<div id="dv_PopUpEmbFirmPrice" class="modal fade" role="dialog"></div>
