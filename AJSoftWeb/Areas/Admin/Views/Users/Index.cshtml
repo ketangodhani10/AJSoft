@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Users";
+}
+
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        var grid_selector = "#UsersDataGrid";
+        var pager_selector = "#UsersDataPager";
+        var ddlUserStatus = '@ViewBag.lstUserStatus';
+
+        jQuery(grid_selector).jqGrid({
+            url: '@Url.Action("GetGridData", "Users", new { Area = "Admin" })',
+            viewrecords: true, sortname: 'FirstName', sortorder: "asc",
+
+            colNames: ['UserId', 'RoleId', 'JariCompanyId', 'Email', 'First Name', 'Last Name', 'Jari Company', 'Mobile', 'Phone', 'Status'],
+            colModel: [
+                        { name: 'UserId', index: 'UserId', width: 0, hidden: true, key: true },
+                        { name: 'RoleId', index: 'RoleId', width: 0, hidden: true },
+                        { name: 'JariCompanyId', index: 'JariCompanyId', width: 0, hidden: true },
+                        { name: 'Email', index: 'Email', width: 10, search: true, searchoptions: JQ_sopt_string, formatter: TitleFormatter },
+                        { name: 'FirstName', index: 'FirstName', width: 8, search: true, searchoptions: JQ_sopt_string },
+                        { name: 'LastName', index: 'LastName', width: 8, search: true, searchoptions: JQ_sopt_string },
+                        { name: 'JariCompanyName', index: 'JariCompanyName', width: 8, search: true, searchoptions: JQ_sopt_string },
+                        { name: 'Mobile', index: 'Mobile', width: 8, search: true, searchoptions: JQ_sopt_string },
+                        { name: 'Phone', index: 'Phone', width: 8, search: true, searchoptions: JQ_sopt_string },
+                        { name: 'Status', index: 'Status', width: 8, search: true, stype: 'select', searchoptions: { sopt: ['eq'], value: ddlUserStatus } },
+            ],
+            ondblClickRow: function (rowId) {
+                var rowData = jQuery(this).getRowData(rowId);
+                Manage(rowData["UserId"]);
+            },
+            rowNum: JQ_RowNum_Opt,
+            rowList: JQ_Paging_Opt,
+            pager: pager_selector,
+            height: '100%',
+            autowidth: true,
+            cmTemplate: { title: false },
+            datatype: 'json'
+
+        }).navGrid(pager_selector, { view: false, del: false, add: false, edit: false, search: false, refresh: true }
+        ).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: 'cn', searchOperators: true });
+
+    });
+
+    function TitleFormatter(cellvalue, options, rowObject) {
+        return "<a href='javascript:void(0);' class='jqgridatag' onclick='Manage(\"" + rowObject["UserId"] + "\");'>" + cellvalue + "</a>";
+    }
+
+    function Manage(entityId) {
+        $('#dv_PopUp').html("");
+        $("#dv_PopUp").load('@Url.Content("~/Admin/Users/Manage?id=")' + entityId, function () {
+            $('#dv_PopUp').modal('show');
+        });
+    }
+</script>
+
+
+@Html.Partial("_ResultMessage")
+
+<header id="topbar">
+    <div class="topbar-left">
+        <ol class="breadcrumb">
+            <li class="crumb-active">
+                <a href="/Admin/Home/Index">Dashboard</a>
+            </li>
+            <li class="crumb-trail">Config</li>
+            <li class="crumb-link">
+                <a href="/Admin/Users/Index">Users</a>
+            </li>
+        </ol>
+    </div>
+</header>
+
+<!-- Begin: Content -->
+<section id="content" class="table-layout animated fadeIn">
+
+    <!-- begin: .tray-center -->
+    <div class="tray tray-center va-t posr">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-visible">
+                    <div class="panel-heading">
+                        <div class="panel-title hidden-xs">
+                            <span class="glyphicon glyphicon-tasks"></span><span>Users</span>
+                            <button type="button" class="btn btn-sm btn-rounded btn-dark pull-right" data-toggle="modal" onclick="Manage('@Guid.Empty');">Add User</button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="jqgrid" id="content">
+                            <table id="UsersDataGrid"></table>
+                            <div id="UsersDataPager"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: .tray-center -->
+</section>
+<!-- End: Content -->
+
+<div id="dv_PopUp" class="modal fade" role="dialog"></div>

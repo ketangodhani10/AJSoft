@@ -1,0 +1,9 @@
+E:\Study\working\AmarJari\V2\AJSoft\AJSoftEntity\bin\Debug\AJSoftEntity.dll
+E:\Study\working\AmarJari\V2\AJSoft\AJSoftEntity\bin\Debug\AJSoftEntity.pdb
+E:\Study\working\AmarJari\V2\AJSoft\AJSoftEntity\obj\Debug\AJSoftEntity.dll
+E:\Study\working\AmarJari\V2\AJSoft\AJSoftEntity\obj\Debug\AJSoftEntity.pdb
+D:\Projects\AmarJari\V2\AJSoft\AJSoftEntity\bin\Debug\AJSoftEntity.dll
+D:\Projects\AmarJari\V2\AJSoft\AJSoftEntity\bin\Debug\AJSoftEntity.pdb
+D:\Projects\AmarJari\V2\AJSoft\AJSoftEntity\obj\Debug\AJSoftEntity.dll
+D:\Projects\AmarJari\V2\AJSoft\AJSoftEntity\obj\Debug\AJSoftEntity.pdb
+D:\Projects\AmarJari\V2\AJSoft\AJSoftEntity\obj\Debug\AJSoftEntity.csprojResolveAssemblyReference.cache

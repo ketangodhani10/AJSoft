@@ -1,0 +1,150 @@
+﻿@model AJSoftEntity.User
+@using AJSoftEntity.Classes
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse($("#Manage-Users-Form"));
+        $.validator.addMethod(
+           "date",
+           function (value, element) {
+               var bits = value.match(/([0-9]+)/gi), str;
+               if (!bits)
+                   return this.optional(element) || false;
+               str = bits[1] + '-' + bits[0] + '-' + bits[2];
+               return this.optional(element) || !/Invalid|NaN/.test(new Date(str));
+           },
+           "Please enter date in valid format dd-mm-yyyy"
+       );
+
+        var validator = $("#Manage-Users-Form").data('validator');
+        validator.settings.ignore = ":hidden:not(.chosen)";
+
+        $(".chosen").chosen();
+        resizeChosen();
+
+    });
+
+    function Save() {
+        if ($('#Manage-Users-Form').valid()) {
+            $('#ManageData').block();
+
+            var formData = $("#Manage-Users-Form").serialize();
+            $.post("@Url.Content("~/Admin/Users/Save")", formData, function (data) {
+                if (data.success) {
+                    $('#dv_PopUp').modal('hide');
+                    SuccessMessage(data.message);
+                    $('#UsersDataGrid').trigger('reloadGrid');
+                } else {
+                    $('#ManageData').unblock();
+                    ErrorMessage(data.message);
+                }
+            });
+        }
+    }
+
+    //Delete
+    function Delete(entityId) {
+        if (confirm("Are you sure you want to Delete this record?")) {
+            $('#UsersDataGrid').block();
+            $.post("/Admin/Users/Delete?id=" + entityId, function (data, status) {
+                $('#UsersDataGrid').unblock();
+                if (data.success) {
+                    $('#dv_PopUp').modal('hide');
+                    SuccessMessage(data.message);
+                    $('#UsersDataGrid').trigger('reloadGrid');
+                }
+                else {
+                    ErrorMessage(data.message);
+                }
+            });
+        }
+    }
+
+    function Cancel() {
+        $('#dv_PopUp').modal('hide');
+    }
+</script>
+
+<div class="modal-dialog" id="ManageData">
+    <div class="panel form-horizontal">
+        <div class="modal-header">
+            <button data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Manage User</h4>
+        </div>
+        <div class="modal-body">
+            @using (Html.BeginForm("", "", FormMethod.Post, new { Id = "Manage-Users-Form", @class = "form-horizontal" }))
+            {
+                @Html.HiddenFor(p => p.UserId)
+                @Html.HiddenFor(p => p.Password)
+
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Jari Company&nbsp;<span class="light-red">*</span></label>
+                    <div class="col-lg-9">
+                        @Html.DropDownListFor(p => p.JariCompanyId, new SelectList(ViewBag.lstJariCompanies as System.Collections.IEnumerable, "JariCompanyId", "JariCompanyName"), "--Select--", new { @class = "form-control chosen" })
+                        @Html.ValidationMessageFor(p => p.JariCompanyId)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">First Name&nbsp;<span class="light-red">*</span></label>
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(p => p.FirstName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.FirstName)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Last Name&nbsp;<span class="light-red">*</span></label>
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(p => p.LastName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.LastName)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Email&nbsp;<span class="light-red">*</span></label>
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(p => p.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.Email)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Mobile&nbsp;<span class="light-red">*</span></label>
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(p => p.Mobile, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.Mobile)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Phone</label>
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(p => p.Phone, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.Phone)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Role</label>
+                    <div class="col-lg-9">
+                        @Html.DropDownListFor(p => p.RoleId, new SelectList(ViewBag.lstRoles as System.Collections.IEnumerable, "RoleId", "RoleName"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.RoleId)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Status</label>
+                    <div class="col-lg-9">
+                        @Html.DropDownListFor(p => p.Status, new SelectList(ViewBag.lstUserStatus as System.Collections.IEnumerable, "Value", "Text"), new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="panel-footer text-center admin-form dark-bg">
+            <div>
+                <button class="button btn-primary" type="submit" onclick="Save();"> Save </button>&nbsp;
+                <button data-dismiss="modal" class="button" style="background:#ccc;" type="button" onclick="Cancel();">Cancel</button>
+            </div>
+            @if (Model.UserId != Guid.Empty)
+            {
+                <button data-dismiss="modal" class="button deletebutton" type="button" onclick="Delete('@Model.UserId');">Delete</button>
+            }
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,41 @@
+﻿@using AJSoftEntity
+@using AJSoftEntity.Classes
+
+@{
+    User oUser = (User)Session[EnumData.En_UserSession.User.ToString()];
+}
+<header class="navbar navbar-fixed-top bg-light">
+    <div class="navbar-branding">
+        <a class="navbar-brand" href="/Home/Index">
+            <b>Amar</b>Jari
+                <span class="pl30"><i class="fa fa-user mr10" style="color: #4a89dc;"></i>Administrator</span>
+        </a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
+                <span class="fa fa-user fa-lg mw30 br64 mr10"></span>
+                <span>@oUser.FirstName @oUser.LastName</span>
+                <span class="caret caret-tp"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-persist pn w250 bg-white" role="menu">
+                <li class="br-t of-h">
+                    <a href="/Users/ManageProfile" class="fw600 p12">
+                        <span class="fa fa-gear pr5"></span> Manage Profile
+                    </a>
+                </li>
+                <li class="br-t of-h">
+                    <a href="/Account/ChangePassword" class="fw600 p12">
+                        <span class="fa fa-gear pr5"></span> Change Password
+                    </a>
+                </li>
+                <li class="br-t of-h">
+                    <a href="/Account/Logout" class="fw600 p12">
+                        <span class="fa fa-power-off pr5"></span> Logout
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+</header>

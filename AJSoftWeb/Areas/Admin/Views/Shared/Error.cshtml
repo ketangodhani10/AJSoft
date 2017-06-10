@@ -1,0 +1,46 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    ViewBag.Title = "Error";
+}
+
+<div class="admin-form theme-info mw500" id="login1">
+    <div class="row table-layout">
+        <div class="col-xs-6 center-block text-center va-m pln">
+            <span title="Return to Dashboard">
+                <img style="max-width: 275px;" class="center-block img-responsive" src="~/Content/images/logo.png">
+            </span>
+        </div>
+    </div>
+    <div class="space-6"></div>
+    <div class="panel mt30 mb25">
+        <!-- end .form-header section -->
+
+        <div class="panel-body bg-light p25 pb15">
+            <div class="alert alert-border-left alert-danger pastel alert-dismissable mn mb10">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button"></button>
+                An error occurred while processing your request.
+            </div>
+            <div class="section" style="border-top: 1px solid #ddd; margin-bottom: 0px;">
+
+                <label class="field prepend-icon" for="username">
+                    @{
+                        if (String.IsNullOrEmpty(ViewBag.ErrorMessage))
+                        {
+                            <p class="red text-danger bigger-130" style="padding: 10px 5px;">An error occurred while processing your request.</p>
+                        }
+                        else
+                        {
+                            <p class="red text-danger bigger-130" style="padding: 10px 5px;">@ViewBag.ErrorMessage</p>
+                        }
+                    }
+                </label>
+            </div>
+
+        </div>
+        <!-- end .form-body section -->
+        <!-- end .form-footer section -->
+    </div>
+
+</div>

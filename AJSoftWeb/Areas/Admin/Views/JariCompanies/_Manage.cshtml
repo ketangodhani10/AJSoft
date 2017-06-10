@@ -1,0 +1,113 @@
+﻿@model AJSoftEntity.JariCompany
+@using AJSoftEntity.Classes
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse($("#Manage-JariCompany-Form"));
+        $.validator.addMethod(
+           "date",
+           function (value, element) {
+               var bits = value.match(/([0-9]+)/gi), str;
+               if (!bits)
+                   return this.optional(element) || false;
+               str = bits[1] + '-' + bits[0] + '-' + bits[2];
+               return this.optional(element) || !/Invalid|NaN/.test(new Date(str));
+           },
+           "Please enter date in valid format dd-mm-yyyy"
+       );
+
+        $(".chosen").chosen();
+        resizeChosen();
+
+        jQuery('#ActivationEndDate').datetimepicker({
+            format: "DD-MM-YYYY",
+            pickTime: false,
+        });
+
+        if ('@Model.JariCompanyId' == '0') {
+            $("#ActivationEndDate").val('@DateTime.UtcNow.AddYears(1)').change();
+        }
+    });
+
+    function Save() {
+        if ($('#Manage-JariCompany-Form').valid()) {
+            $('#ManageData').block();
+            $("#ActivationEndDate").val(setDateFormatforCSharp($("#ActivationEndDate").val()));
+
+            var formData = $("#Manage-JariCompany-Form").serialize();
+            $.post("@Url.Content("~/Admin/JariCompanies/Save")", formData, function (data) {
+                if (data.success) {
+                    $('#dv_PopUp').modal('hide');
+                    SuccessMessage(data.message);
+                    $('#JariCompanyDataGrid').trigger('reloadGrid');
+                } else {
+                    $('#ManageData').unblock();
+                    ErrorMessage(data.message);
+                }
+            });
+        }
+    }
+
+    //Delete
+    function Delete(entityId) {
+        if (confirm("Are you sure you want to Delete this record?")) {
+            $('#JariCompanyDataGrid').block();
+            $.post("/Admin/JariCompanies/Delete?id=" + entityId, function (data, status) {
+                $('#JariCompanyDataGrid').unblock();
+                if (data.success) {
+                    $('#dv_PopUp').modal('hide');
+                    SuccessMessage(data.message);
+                    $('#JariCompanyDataGrid').trigger('reloadGrid');
+                }
+                else {
+                    ErrorMessage(data.message);
+                }
+            });
+        }
+    }
+
+    function Cancel() {
+        $('#dv_PopUp').modal('hide');
+    }
+</script>
+
+<div class="modal-dialog" id="ManageData">
+    <div class="panel form-horizontal">
+        <div class="modal-header">
+            <button data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Manage Jari Company</h4>
+        </div>
+        <div class="modal-body">
+            @using (Html.BeginForm("", "", FormMethod.Post, new { Id = "Manage-JariCompany-Form", @class = "form-horizontal" }))
+            {
+                @Html.HiddenFor(p => p.JariCompanyId)
+                @Html.HiddenFor(p => p.CreateDate)
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Company Name&nbsp;<span class="light-red">*</span></label>
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(p => p.JariCompanyName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.JariCompanyName)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputStandard" class="col-lg-3 control-label">Activation End Date</label>
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(p => p.ActivationEndDate, "{0:dd-MM-yyyy}", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.ActivationEndDate)
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="panel-footer text-center admin-form dark-bg">
+            <div>
+                <button class="button btn-primary" type="submit" onclick="Save();"> Save </button>&nbsp;
+                <button data-dismiss="modal" class="button" style="background:#ccc;" type="button" onclick="Cancel();">Cancel</button>
+            </div>
+            @if (Model.JariCompanyId != 0)
+            {
+                <button data-dismiss="modal" class="button deletebutton" type="button" onclick="Delete('@Model.JariCompanyId');">Delete</button>
+            }
+        </div>
+    </div>
+</div>
+
